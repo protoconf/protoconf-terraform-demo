@@ -1,0 +1,163 @@
+"""
+This file contains constants and functions to assist with instance installations.
+"""
+# vi:filetype=python syntax=python
+def systemd(service_name, exec_start, docs="http://localhost"):
+    """
+    Configures a systemd daemon
+
+    """
+    
+    return """\
+cat <<SYSTEMD | sudo tee /etc/systemd/system/{service_name}.service
+[Unit]
+Description={service_name}
+Documentation={docs}
+
+[Service]
+Type=notify
+Restart=always
+RestartSec=5s
+LimitNOFILE=40000
+TimeoutStartSec=0
+
+ExecStart={exec_start}
+
+[Install]
+WantedBy=multi-user.target
+SYSTEMD
+
+sudo systemctl daemon-reload
+sudo systemctl enable {service_name}
+sudo systemctl start {service_name}
+""".format(service_name=service_name, exec_start=exec_start, docs=docs)
+
+
+INSTALL_BASE = """\
+#!/bin/bash
+echo "Installing dependencies ..."
+sudo apt-get update
+sudo apt-get install -y unzip curl jq dnsutils
+"""
+
+INSTALL_DOCKER = """\
+# Install Docker
+sudo apt-get install -y \
+     apt-transport-https \
+     ca-certificates \
+     curl \
+     gnupg-agent \
+     software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+"""
+
+ETCD_SETUP="""
+mkdir -p /var/lib/etcd
+PRIVATE_IP=$(ip -o route get 10.0.0.0 | awk '{print $7}')
+ETCD_VER=v3.3.18
+
+# choose either URL
+GOOGLE_URL=https://storage.googleapis.com/etcd
+GITHUB_URL=https://github.com/etcd-io/etcd/releases/download
+DOWNLOAD_URL=$${GOOGLE_URL}
+
+rm -f /tmp/etcd-$${ETCD_VER}-linux-amd64.tar.gz
+rm -rf /tmp/etcd-download-test && mkdir -p /tmp/etcd-download-test
+
+curl -L $${DOWNLOAD_URL}/$${ETCD_VER}/etcd-$${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd-$${ETCD_VER}-linux-amd64.tar.gz
+tar xzvf /tmp/etcd-$${ETCD_VER}-linux-amd64.tar.gz -C /usr/local/bin --strip-components=1
+rm -f /tmp/etcd-$${ETCD_VER}-linux-amd64.tar.gz
+
+/usr/local/bin/etcd --version
+/usr/local/bin/etcdctl version
+
+""" + systemd("etcd", " ".join([
+    "/usr/local/bin/etcd",
+    "--data-dir=/var/lib/etcd --name $${HOSTNAME}",
+    "--discovery=${etcd_discovery.init.id}",
+    "--advertise-client-urls http://$${PRIVATE_IP}:2379",
+    "--listen-client-urls http://0.0.0.0:2379",
+    "--initial-advertise-peer-urls http://$${PRIVATE_IP}:2380",
+    "--listen-peer-urls http://0.0.0.0:2380",
+]))
+
+
+K3S_INSTALL = """\
+sudo curl -sfL https://get.k3s.io | K3S_TOKEN="helloworld" INSTALL_K3S_EXEC="server --no-deploy traefik,servicelb --no-flannel --cluster-cidr 100.64.0.0/10 --service-cidr 192.168.0.0/16 --cluster-dns 192.168.0.10 --disable-network-policy --datastore-endpoint=http://localhost:2379" sh -
+"""
+
+def consul_setup(role="server", dc="dc1", additional_args=""):
+    """
+    Defines the installation of consul
+
+    Args:
+        role: either `server` or `client`
+        dc: Name of the datacenter
+        additional_args: Additional command line arguments to pass to the consul agent
+
+    Returns:
+        Installation and configuration script for the consul agent.
+    """
+    agent_args = []
+    if role == "server":
+      agent_args.append("-server -bootstrap-expect=3")
+
+    agent_args.append("""-ui -client 0.0.0.0 -advertise '{{GetPublicIP}}'""")
+    agent_args.append("-datacenter=" + dc)
+    agent_args.append("-data-dir=/opt/consul/data")
+    agent_args.append(additional_args)
+
+    return """\
+echo "Determining Consul version to install ..."
+CHECKPOINT_URL="https://checkpoint-api.hashicorp.com/v1/check"
+CONSUL_DEMO_VERSION=$(curl -s "$${CHECKPOINT_URL}"/consul | jq .current_version | tr -d '"')
+echo "Fetching Consul version $${CONSUL_DEMO_VERSION} ..."
+cd /tmp/
+curl -s https://releases.hashicorp.com/consul/$${CONSUL_DEMO_VERSION}/consul_$${CONSUL_DEMO_VERSION}_linux_amd64.zip -o consul.zip
+echo "Installing Consul version $${CONSUL_DEMO_VERSION} ..."
+unzip consul.zip
+sudo chmod +x consul
+sudo mv consul /usr/local/bin/consul
+sudo mkdir /etc/consul.d
+sudo chmod a+w /etc/consul.d
+sudo mkdir -p /opt/consul/data
+
+""" + systemd("consul", " ".join([
+    "/usr/local/bin/consul",
+    "agent",
+    " ".join(agent_args),
+]))
+
+def nomad_setup(role="server", dc="dc1", additional_args=""):
+    agent_args = ["-" + role]
+    if role == "server":
+        agent_args.append("-bootstrap-expect=3")
+    agent_args.append("-data-dir=/opt/nomad/data")
+
+    return """\
+echo "Determining Nomad version to install ..."
+CHECKPOINT_URL="https://checkpoint-api.hashicorp.com/v1/check"
+NOMAD_VERSION=$(curl -s "$${CHECKPOINT_URL}"/nomad | jq .current_version | tr -d '"')
+echo "Fetching Consul version $${NOMAD_VERSION} ..."
+cd /tmp/
+curl -s https://releases.hashicorp.com/nomad/$${NOMAD_VERSION}/nomad_$${NOMAD_VERSION}_linux_amd64.zip -o nomad.zip
+echo "Installing Nomad version $${NOMAD_VERSION} ..."
+unzip nomad.zip
+sudo chmod +x nomad
+sudo mv nomad /usr/local/bin/nomad
+sudo mkdir /etc/nomad.d
+sudo chmod a+w /etc/nomad.d
+sudo mkdir -p /opt/nomad/data
+
+""" + systemd("nomad", " ".join([
+    "/usr/local/bin/nomad",
+    "agent",
+    " ".join(agent_args),
+]))

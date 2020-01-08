@@ -1,0 +1,5 @@
+.terraform
+*.tf.json
+materialized_config/**/*.tf.materialized_JSON
+terraform.tfstate
+terraform.tfstate.backup

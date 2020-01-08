@@ -1,0 +1,82 @@
+# vi:filetype=python syntax=python
+"""
+This is the entrypoint of the terraform file.
+"""
+load("/terraform/terraform.proto", "Terraform")
+load("/terraform/digitalocean-resources.proto", "DigitaloceanDroplet")
+load("/terraform/random-resources.proto", "RandomPet")
+load(
+    "install_scripts.pinc",
+    "INSTALL_BASE",
+    "INSTALL_DOCKER",
+    "ETCD_SETUP",  # @unused
+    "K3S_INSTALL", # @unused
+    "consul_setup",
+    "nomad_setup",
+)
+# load("etcd-resources.proto", "EtcdDiscovery")
+
+COUNTER = 0
+CLIENTS = 0
+
+CONSUL_JOIN_ARGS = {
+    "digitalocean": """-retry-join 'provider=digitalocean api_token={token} region={dc} tag_name=server'""",
+    # Will support more providers later
+}
+
+TOKENS = {
+    "digitalocean": "${var.digitalocean_token}"
+}
+
+def create_droplet(hostname, role="server", dc="ams3", user_data=""):
+    return DigitaloceanDroplet(
+        name=hostname,
+        image="ubuntu-18-04-x64",
+        region=dc,
+        size="s-1vcpu-1gb",
+        ssh_keys=["25982933"],
+        tags=[role],
+        private_networking=True,
+        user_data=user_data,
+    )
+
+
+CREATE_FUNCS={
+    "digitalocean": create_droplet
+}
+
+def create_device(tf, name, role, dc, provider):
+    """
+    create_device adds devices and their "pet" names to the terraform object
+
+    Args:
+        tf: The terraform protobuf object
+        name: Name of the terraform key to be used as resource ids.
+        role: Role of the server, either `server` or `client`
+        dc: The datacenter to deploy the device in.
+        provider: The cloud provider to use
+    """
+    tf.random_pet[name] = RandomPet()
+    user_data = INSTALL_BASE \
+        + INSTALL_DOCKER \
+        + consul_setup(role, dc, CONSUL_JOIN_ARGS[provider].format(dc=dc, token=TOKENS[provider])) \
+        + nomad_setup(role, dc)
+    tf.digitalocean_droplet[name] = CREATE_FUNCS[provider]("${random_pet.%s.id}" % name, role, dc, user_data)
+
+
+def main():
+    """
+    Entrypoint function
+    
+    Returns:
+        Terraform object to compile
+    """
+    tf = Terraform(resource=Terraform.Resources())
+    provider = "digitalocean"
+    for dc in ["ams3"]:
+        for i in range(COUNTER + 0, COUNTER + 3):
+            create_device(tf.resource, "server%s%d" % (dc, i), "server", dc, provider)
+            for i in range(COUNTER + 0, COUNTER + CLIENTS):
+                create_device(tf.resource, "client%s%d" % (dc, i), "client", dc, provider)
+
+    return tf
