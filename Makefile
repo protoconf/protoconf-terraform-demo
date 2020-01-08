@@ -1,10 +1,10 @@
-compile: generate
-	~/bin/protoconf compile .
+compile:
+	protoconf compile .
 	cat materialized_config/infra/infra.tf.materialized_JSON | jq '.value | del(.["@type"])' > infra.tf.json
 	terraform validate
 
 generate:
-	~/bin/pc4tf generate
+	pc4tf generate
 
 plan: compile
 	terraform plan
