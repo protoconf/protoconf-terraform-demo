@@ -2,133 +2,133 @@ syntax = "proto3";
 
 package terraform.random.resources;
 
+//RandomShuffle version is 0
+message RandomShuffle {
+  map<string, string> keepers = 1;
+
+  repeated string result = 2;
+
+  int64 result_count = 3 [json_name = "result_count"];
+
+  string seed = 4;
+
+  string id = 5;
+
+  repeated string input = 6;
+}
+
 //RandomPet version is 0
 message RandomPet {
-  string id = 1;
+  int64 length = 1;
 
-  map<string, string> keepers = 2;
+  string prefix = 2;
 
-  int64 length = 3;
+  string separator = 3;
 
-  string prefix = 4;
+  string id = 4;
 
-  string separator = 5;
+  map<string, string> keepers = 5;
 }
 
 //RandomString version is 1
 message RandomString {
-  int64 min_lower = 1 [json_name = "min_lower"];
-
-  int64 min_upper = 2 [json_name = "min_upper"];
-
-  bool number = 3;
-
-  string override_special = 4 [json_name = "override_special"];
-
-  string id = 5;
-
-  map<string, string> keepers = 6;
-
-  int64 length = 7;
-
-  bool lower = 8;
-
-  string result = 9;
-
-  bool upper = 10;
-
-  int64 min_numeric = 11 [json_name = "min_numeric"];
-
-  int64 min_special = 12 [json_name = "min_special"];
-
-  bool special = 13;
-}
-
-//RandomPassword version is 0
-message RandomPassword {
   int64 length = 1;
 
   bool lower = 2;
 
-  int64 min_lower = 3 [json_name = "min_lower"];
+  int64 min_special = 3 [json_name = "min_special"];
 
-  int64 min_special = 4 [json_name = "min_special"];
+  bool number = 4;
 
-  int64 min_upper = 5 [json_name = "min_upper"];
+  bool special = 5;
 
-  string override_special = 6 [json_name = "override_special"];
+  bool upper = 6;
 
   string result = 7;
 
   string id = 8;
 
-  bool upper = 9;
+  map<string, string> keepers = 9;
 
-  int64 min_numeric = 10 [json_name = "min_numeric"];
+  int64 min_lower = 10 [json_name = "min_lower"];
 
-  bool number = 11;
+  int64 min_numeric = 11 [json_name = "min_numeric"];
+
+  int64 min_upper = 12 [json_name = "min_upper"];
+
+  string override_special = 13 [json_name = "override_special"];
+}
+
+//RandomPassword version is 0
+message RandomPassword {
+  int64 min_lower = 1 [json_name = "min_lower"];
+
+  int64 min_numeric = 2 [json_name = "min_numeric"];
+
+  int64 min_special = 3 [json_name = "min_special"];
+
+  int64 min_upper = 4 [json_name = "min_upper"];
+
+  bool number = 5;
+
+  string id = 6;
+
+  int64 length = 7;
+
+  bool lower = 8;
+
+  string override_special = 9 [json_name = "override_special"];
+
+  string result = 10;
+
+  map<string, string> keepers = 11;
 
   bool special = 12;
 
-  map<string, string> keepers = 13;
+  bool upper = 13;
 }
 
 //RandomInteger version is 0
 message RandomInteger {
-  map<string, string> keepers = 1;
+  int64 max = 1;
 
-  int64 max = 2;
+  int64 min = 2;
 
-  int64 min = 3;
+  int64 result = 3;
 
-  int64 result = 4;
+  string seed = 4;
 
-  string seed = 5;
+  string id = 5;
 
-  string id = 6;
+  map<string, string> keepers = 6;
 }
 
 //RandomUuid version is 0
 message RandomUuid {
-  string result = 1;
+  string id = 1;
 
-  string id = 2;
+  map<string, string> keepers = 2;
 
-  map<string, string> keepers = 3;
+  string result = 3;
 }
 
 //RandomId version is 0
 message RandomId {
-  string b64 = 1;
+  string hex = 1;
 
-  string b64_std = 2 [json_name = "b64_std"];
+  string id = 2;
 
-  string b64_url = 3 [json_name = "b64_url"];
+  map<string, string> keepers = 3;
 
-  string hex = 4;
+  string prefix = 4;
 
-  string prefix = 5;
+  string b64_std = 5 [json_name = "b64_std"];
 
-  int64 byte_length = 6 [json_name = "byte_length"];
+  string dec = 6;
 
-  string dec = 7;
+  int64 byte_length = 7 [json_name = "byte_length"];
 
-  string id = 8;
+  string b64 = 8;
 
-  map<string, string> keepers = 9;
-}
-
-//RandomShuffle version is 0
-message RandomShuffle {
-  int64 result_count = 1 [json_name = "result_count"];
-
-  string seed = 2;
-
-  string id = 3;
-
-  repeated string input = 4;
-
-  map<string, string> keepers = 5;
-
-  repeated string result = 6;
+  string b64_url = 9 [json_name = "b64_url"];
 }

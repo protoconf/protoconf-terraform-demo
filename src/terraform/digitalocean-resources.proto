@@ -2,332 +2,6 @@ syntax = "proto3";
 
 package terraform.digitalocean.resources;
 
-//DigitaloceanDatabaseDb version is 0
-message DigitaloceanDatabaseDb {
-  string cluster_id = 1 [json_name = "cluster_id"];
-
-  string id = 2;
-
-  string name = 3;
-}
-
-//DigitaloceanDatabaseConnectionPool version is 0
-message DigitaloceanDatabaseConnectionPool {
-  string password = 1;
-
-  string private_uri = 2 [json_name = "private_uri"];
-
-  int64 size = 3;
-
-  string uri = 4;
-
-  string user = 5;
-
-  string db_name = 6 [json_name = "db_name"];
-
-  string host = 7;
-
-  string mode = 8;
-
-  int64 port = 9;
-
-  string private_host = 10 [json_name = "private_host"];
-
-  string cluster_id = 11 [json_name = "cluster_id"];
-
-  string id = 12;
-
-  string name = 13;
-}
-
-//DigitaloceanCertificate version is 0
-message DigitaloceanCertificate {
-  string certificate_chain = 1 [json_name = "certificate_chain"];
-
-  string id = 2;
-
-  string sha1_fingerprint = 3 [json_name = "sha1_fingerprint"];
-
-  string type = 4;
-
-  repeated string domains = 5;
-
-  string leaf_certificate = 6 [json_name = "leaf_certificate"];
-
-  string name = 7;
-
-  string not_after = 8 [json_name = "not_after"];
-
-  string private_key = 9 [json_name = "private_key"];
-
-  string state = 10;
-}
-
-//DigitaloceanDatabaseReplica version is 0
-message DigitaloceanDatabaseReplica {
-  string cluster_id = 1 [json_name = "cluster_id"];
-
-  string private_host = 2 [json_name = "private_host"];
-
-  string private_uri = 3 [json_name = "private_uri"];
-
-  int64 port = 4;
-
-  string database = 5;
-
-  string host = 6;
-
-  string id = 7;
-
-  string name = 8;
-
-  string password = 9;
-
-  string region = 10;
-
-  string uri = 11;
-
-  string user = 12;
-
-  string size = 13;
-
-  repeated string tags = 14;
-}
-
-//DigitaloceanDropletSnapshot version is 0
-message DigitaloceanDropletSnapshot {
-  string created_at = 1 [json_name = "created_at"];
-
-  string droplet_id = 2 [json_name = "droplet_id"];
-
-  string id = 3;
-
-  int64 min_disk_size = 4 [json_name = "min_disk_size"];
-
-  string name = 5;
-
-  repeated string regions = 6;
-
-  int64 size = 7;
-}
-
-//DigitaloceanDroplet version is 1
-message DigitaloceanDroplet {
-  bool backups = 1;
-
-  string user_data = 2 [json_name = "user_data"];
-
-  string urn = 3;
-
-  int64 disk = 4;
-
-  string ipv6_address = 5 [json_name = "ipv6_address"];
-
-  string name = 6;
-
-  int64 price_hourly = 7 [json_name = "price_hourly"];
-
-  bool private_networking = 8 [json_name = "private_networking"];
-
-  bool ipv6 = 9;
-
-  string status = 10;
-
-  repeated string tags = 11;
-
-  int64 vcpus = 12;
-
-  bool resize_disk = 13 [json_name = "resize_disk"];
-
-  string size = 14;
-
-  string id = 15;
-
-  string image = 16;
-
-  string ipv4_address = 17 [json_name = "ipv4_address"];
-
-  string ipv4_address_private = 18 [json_name = "ipv4_address_private"];
-
-  int64 price_monthly = 19 [json_name = "price_monthly"];
-
-  string ipv6_address_private = 20 [json_name = "ipv6_address_private"];
-
-  bool monitoring = 21;
-
-  repeated string ssh_keys = 22 [json_name = "ssh_keys"];
-
-  repeated string volume_ids = 23 [json_name = "volume_ids"];
-
-  string created_at = 24 [json_name = "created_at"];
-
-  bool locked = 25;
-
-  int64 memory = 26;
-
-  string region = 27;
-}
-
-//DigitaloceanDatabaseCluster version is 0
-message DigitaloceanDatabaseCluster {
-  string private_uri = 1 [json_name = "private_uri"];
-
-  string region = 2;
-
-  string version = 3;
-
-  string host = 4;
-
-  string name = 5;
-
-  string password = 6;
-
-  string urn = 7;
-
-  string private_host = 8 [json_name = "private_host"];
-
-  string size = 9;
-
-  string uri = 10;
-
-  string database = 11;
-
-  string engine = 12;
-
-  repeated string tags = 13;
-
-  string user = 14;
-
-  string id = 15;
-
-  int64 node_count = 16 [json_name = "node_count"];
-
-  int64 port = 17;
-}
-
-//DigitaloceanRecord version is 0
-message DigitaloceanRecord {
-  string tag = 1;
-
-  int64 ttl = 2;
-
-  string value = 3;
-
-  int64 weight = 4;
-
-  string fqdn = 5;
-
-  string id = 6;
-
-  string name = 7;
-
-  int64 priority = 8;
-
-  string domain = 9;
-
-  int64 flags = 10;
-
-  int64 port = 11;
-
-  string type = 12;
-}
-
-//DigitaloceanKubernetesCluster version is 1
-message DigitaloceanKubernetesCluster {
-  string cluster_subnet = 1 [json_name = "cluster_subnet"];
-
-  string created_at = 2 [json_name = "created_at"];
-
-  string ipv4_address = 3 [json_name = "ipv4_address"];
-
-  string name = 4;
-
-  string service_subnet = 5 [json_name = "service_subnet"];
-
-  string version = 6;
-
-  string endpoint = 7;
-
-  string id = 8;
-
-  repeated KubeConfig kube_config = 9 [json_name = "kube_config"];
-
-  string region = 10;
-
-  string status = 11;
-
-  repeated string tags = 12;
-
-  string updated_at = 13 [json_name = "updated_at"];
-
-  message KubeConfig {
-    string cluster_ca_certificate = 1 [json_name = "cluster_ca_certificate"];
-
-    string expires_at = 2 [json_name = "expires_at"];
-
-    string host = 3;
-
-    string raw_config = 4 [json_name = "raw_config"];
-
-    string token = 5;
-
-    string client_certificate = 6 [json_name = "client_certificate"];
-
-    string client_key = 7 [json_name = "client_key"];
-  }
-}
-
-//DigitaloceanCdn version is 0
-message DigitaloceanCdn {
-  //The date and time (ISO8601) of when the CDN endpoint was created.
-  string created_at = 1 [json_name = "created_at"];
-
-  //fully qualified domain name (FQDN) for custom subdomain, (requires certificate_id)
-  string custom_domain = 2 [json_name = "custom_domain"];
-
-  //fully qualified domain name (FQDN) to serve the CDN content
-  string endpoint = 3;
-
-  string id = 4;
-
-  //fully qualified domain name (FQDN) for the origin server
-  string origin = 5;
-
-  //The amount of time the content is cached in the CDN
-  int64 ttl = 6;
-
-  //ID of a DigitalOcean managed TLS certificate for use with custom domains
-  string certificate_id = 7 [json_name = "certificate_id"];
-}
-
-//DigitaloceanVolume version is 0
-message DigitaloceanVolume {
-  int64 size = 1;
-
-  string snapshot_id = 2 [json_name = "snapshot_id"];
-
-  repeated int64 droplet_ids = 3 [json_name = "droplet_ids"];
-
-  string filesystem_type = 4 [json_name = "filesystem_type"];
-
-  string id = 5;
-
-  string initial_filesystem_label = 6 [json_name = "initial_filesystem_label"];
-
-  string initial_filesystem_type = 7 [json_name = "initial_filesystem_type"];
-
-  string name = 8;
-
-  //the uniform resource name for the volume.
-  string urn = 9;
-
-  string description = 10;
-
-  string filesystem_label = 11 [json_name = "filesystem_label"];
-
-  string region = 12;
-}
-
 //DigitaloceanVolumeAttachment version is 0
 message DigitaloceanVolumeAttachment {
   int64 droplet_id = 1 [json_name = "droplet_id"];
@@ -337,175 +11,21 @@ message DigitaloceanVolumeAttachment {
   string volume_id = 3 [json_name = "volume_id"];
 }
 
-//DigitaloceanDomain version is 0
-message DigitaloceanDomain {
-  string id = 1;
-
-  string ip_address = 2 [json_name = "ip_address"];
-
-  string name = 3;
-
-  string urn = 4;
-}
-
-//DigitaloceanTag version is 0
-message DigitaloceanTag {
-  string id = 1;
-
-  string name = 2;
-}
-
-//DigitaloceanLoadbalancer version is 0
-message DigitaloceanLoadbalancer {
-  string region = 1;
+//DigitaloceanFirewall version is 0
+message DigitaloceanFirewall {
+  string created_at = 1 [json_name = "created_at"];
 
   repeated int64 droplet_ids = 2 [json_name = "droplet_ids"];
 
-  bool enable_proxy_protocol = 3 [json_name = "enable_proxy_protocol"];
-
-  string id = 4;
-
-  string name = 5;
-
-  string status = 6;
-
-  //the uniform resource name for the load balancer
-  string urn = 7;
-
-  string algorithm = 8;
-
-  string droplet_tag = 9 [json_name = "droplet_tag"];
-
-  string ip = 10;
-
-  bool redirect_http_to_https = 11 [json_name = "redirect_http_to_https"];
-}
-
-//DigitaloceanProject version is 0
-message DigitaloceanProject {
-  //the environment of the project's resources
-  string environment = 1;
-
-  string id = 2;
-
-  //the human-readable name for the project
-  string name = 3;
-
-  //the date and time when the project was created, (ISO8601)
-  string created_at = 4 [json_name = "created_at"];
-
-  //the descirption of the project
-  string description = 5;
-
-  //the purpose of the project
-  string purpose = 6;
-
-  //the resources associated with the project
-  repeated string resources = 7;
-
-  //the date and time when the project was last updated, (ISO8601)
-  string updated_at = 8 [json_name = "updated_at"];
-
-  //the id of the project owner.
-  int64 owner_id = 9 [json_name = "owner_id"];
-
-  //the unique universal identifier of the project owner.
-  string owner_uuid = 10 [json_name = "owner_uuid"];
-}
-
-//DigitaloceanKubernetesNodePool version is 1
-message DigitaloceanKubernetesNodePool {
-  bool auto_scale = 1 [json_name = "auto_scale"];
-
-  int64 max_nodes = 2 [json_name = "max_nodes"];
-
-  int64 min_nodes = 3 [json_name = "min_nodes"];
+  string id = 3;
 
   string name = 4;
 
-  int64 node_count = 5 [json_name = "node_count"];
+  repeated PendingChanges pending_changes = 5 [json_name = "pending_changes"];
 
-  repeated Nodes nodes = 6;
+  string status = 6;
 
-  int64 actual_node_count = 7 [json_name = "actual_node_count"];
-
-  string cluster_id = 8 [json_name = "cluster_id"];
-
-  string id = 9;
-
-  string size = 10;
-
-  repeated string tags = 11;
-
-  message Nodes {
-    string status = 1;
-
-    string updated_at = 2 [json_name = "updated_at"];
-
-    string created_at = 3 [json_name = "created_at"];
-
-    string id = 4;
-
-    string name = 5;
-  }
-}
-
-//DigitaloceanSshKey version is 0
-message DigitaloceanSshKey {
-  string fingerprint = 1;
-
-  string id = 2;
-
-  string name = 3;
-
-  string public_key = 4 [json_name = "public_key"];
-}
-
-//DigitaloceanDatabaseUser version is 0
-message DigitaloceanDatabaseUser {
-  string name = 1;
-
-  string password = 2;
-
-  string role = 3;
-
-  string cluster_id = 4 [json_name = "cluster_id"];
-
-  string id = 5;
-}
-
-//DigitaloceanVolumeSnapshot version is 0
-message DigitaloceanVolumeSnapshot {
-  int64 min_disk_size = 1 [json_name = "min_disk_size"];
-
-  string name = 2;
-
-  repeated string regions = 3;
-
-  int64 size = 4;
-
-  string volume_id = 5 [json_name = "volume_id"];
-
-  string created_at = 6 [json_name = "created_at"];
-
-  string id = 7;
-}
-
-//DigitaloceanFirewall version is 0
-message DigitaloceanFirewall {
-  string name = 1;
-
-  repeated PendingChanges pending_changes = 2 [json_name = "pending_changes"];
-
-  string status = 3;
-
-  repeated string tags = 4;
-
-  string created_at = 5 [json_name = "created_at"];
-
-  repeated int64 droplet_ids = 6 [json_name = "droplet_ids"];
-
-  string id = 7;
+  repeated string tags = 7;
 
   message PendingChanges {
     int64 droplet_id = 1 [json_name = "droplet_id"];
@@ -514,6 +34,89 @@ message DigitaloceanFirewall {
 
     string status = 3;
   }
+}
+
+//DigitaloceanKubernetesNodePool version is 1
+message DigitaloceanKubernetesNodePool {
+  string cluster_id = 1 [json_name = "cluster_id"];
+
+  string id = 2;
+
+  int64 max_nodes = 3 [json_name = "max_nodes"];
+
+  int64 node_count = 4 [json_name = "node_count"];
+
+  repeated Nodes nodes = 5;
+
+  string size = 6;
+
+  bool auto_scale = 7 [json_name = "auto_scale"];
+
+  int64 min_nodes = 8 [json_name = "min_nodes"];
+
+  string name = 9;
+
+  repeated string tags = 10;
+
+  int64 actual_node_count = 11 [json_name = "actual_node_count"];
+
+  message Nodes {
+    string created_at = 1 [json_name = "created_at"];
+
+    string id = 2;
+
+    string name = 3;
+
+    string status = 4;
+
+    string updated_at = 5 [json_name = "updated_at"];
+  }
+}
+
+//DigitaloceanCdn version is 0
+message DigitaloceanCdn {
+  //ID of a DigitalOcean managed TLS certificate for use with custom domains
+  string certificate_id = 1 [json_name = "certificate_id"];
+
+  //The date and time (ISO8601) of when the CDN endpoint was created.
+  string created_at = 2 [json_name = "created_at"];
+
+  //fully qualified domain name (FQDN) for custom subdomain, (requires certificate_id)
+  string custom_domain = 3 [json_name = "custom_domain"];
+
+  //fully qualified domain name (FQDN) to serve the CDN content
+  string endpoint = 4;
+
+  string id = 5;
+
+  //fully qualified domain name (FQDN) for the origin server
+  string origin = 6;
+
+  //The amount of time the content is cached in the CDN
+  int64 ttl = 7;
+}
+
+//DigitaloceanCertificate version is 0
+message DigitaloceanCertificate {
+  string name = 1;
+
+  string sha1_fingerprint = 2 [json_name = "sha1_fingerprint"];
+
+  string type = 3;
+
+  string certificate_chain = 4 [json_name = "certificate_chain"];
+
+  repeated string domains = 5;
+
+  string not_after = 6 [json_name = "not_after"];
+
+  string private_key = 7 [json_name = "private_key"];
+
+  string state = 8;
+
+  string id = 9;
+
+  string leaf_certificate = 10 [json_name = "leaf_certificate"];
 }
 
 //DigitaloceanFloatingIp version is 0
@@ -530,6 +133,243 @@ message DigitaloceanFloatingIp {
   string urn = 5;
 }
 
+//DigitaloceanSpacesBucket version is 0
+message DigitaloceanSpacesBucket {
+  string id = 1;
+
+  //Bucket name
+  string name = 2;
+
+  //Bucket region
+  string region = 3;
+
+  //the uniform resource name for the bucket
+  string urn = 4;
+
+  //Canned ACL applied on bucket creation
+  string acl = 5;
+
+  //The FQDN of the bucket
+  string bucket_domain_name = 6 [json_name = "bucket_domain_name"];
+
+  //Unless true, the bucket will only be destroyed if empty
+  bool force_destroy = 7 [json_name = "force_destroy"];
+}
+
+//DigitaloceanVolume version is 0
+message DigitaloceanVolume {
+  string filesystem_label = 1 [json_name = "filesystem_label"];
+
+  string filesystem_type = 2 [json_name = "filesystem_type"];
+
+  string initial_filesystem_type = 3 [json_name = "initial_filesystem_type"];
+
+  string name = 4;
+
+  string region = 5;
+
+  string snapshot_id = 6 [json_name = "snapshot_id"];
+
+  string description = 7;
+
+  repeated int64 droplet_ids = 8 [json_name = "droplet_ids"];
+
+  string id = 9;
+
+  string initial_filesystem_label = 10 [json_name = "initial_filesystem_label"];
+
+  int64 size = 11;
+
+  //the uniform resource name for the volume.
+  string urn = 12;
+}
+
+//DigitaloceanDatabaseCluster version is 0
+message DigitaloceanDatabaseCluster {
+  string host = 1;
+
+  string id = 2;
+
+  int64 node_count = 3 [json_name = "node_count"];
+
+  string private_host = 4 [json_name = "private_host"];
+
+  string urn = 5;
+
+  int64 port = 6;
+
+  string private_uri = 7 [json_name = "private_uri"];
+
+  string region = 8;
+
+  repeated string tags = 9;
+
+  string version = 10;
+
+  string database = 11;
+
+  string engine = 12;
+
+  string name = 13;
+
+  string user = 14;
+
+  string password = 15;
+
+  string size = 16;
+
+  string uri = 17;
+}
+
+//DigitaloceanDroplet version is 1
+message DigitaloceanDroplet {
+  bool backups = 1;
+
+  string urn = 2;
+
+  repeated string ssh_keys = 3 [json_name = "ssh_keys"];
+
+  int64 memory = 4;
+
+  bool private_networking = 5 [json_name = "private_networking"];
+
+  bool resize_disk = 6 [json_name = "resize_disk"];
+
+  string size = 7;
+
+  string ipv6_address_private = 8 [json_name = "ipv6_address_private"];
+
+  int64 price_hourly = 9 [json_name = "price_hourly"];
+
+  string created_at = 10 [json_name = "created_at"];
+
+  string name = 11;
+
+  int64 disk = 12;
+
+  string ipv4_address_private = 13 [json_name = "ipv4_address_private"];
+
+  string ipv6_address = 14 [json_name = "ipv6_address"];
+
+  repeated string tags = 15;
+
+  int64 vcpus = 16;
+
+  string id = 17;
+
+  bool locked = 18;
+
+  bool monitoring = 19;
+
+  string region = 20;
+
+  string image = 21;
+
+  string ipv4_address = 22 [json_name = "ipv4_address"];
+
+  bool ipv6 = 23;
+
+  int64 price_monthly = 24 [json_name = "price_monthly"];
+
+  string status = 25;
+
+  string user_data = 26 [json_name = "user_data"];
+
+  repeated string volume_ids = 27 [json_name = "volume_ids"];
+}
+
+//DigitaloceanProject version is 0
+message DigitaloceanProject {
+  //the human-readable name for the project
+  string name = 1;
+
+  //the id of the project owner.
+  int64 owner_id = 2 [json_name = "owner_id"];
+
+  //the unique universal identifier of the project owner.
+  string owner_uuid = 3 [json_name = "owner_uuid"];
+
+  //the resources associated with the project
+  repeated string resources = 4;
+
+  //the date and time when the project was last updated, (ISO8601)
+  string updated_at = 5 [json_name = "updated_at"];
+
+  string id = 6;
+
+  //the descirption of the project
+  string description = 7;
+
+  //the environment of the project's resources
+  string environment = 8;
+
+  //the purpose of the project
+  string purpose = 9;
+
+  //the date and time when the project was created, (ISO8601)
+  string created_at = 10 [json_name = "created_at"];
+}
+
+//DigitaloceanDatabaseConnectionPool version is 0
+message DigitaloceanDatabaseConnectionPool {
+  string cluster_id = 1 [json_name = "cluster_id"];
+
+  string mode = 2;
+
+  string name = 3;
+
+  string private_host = 4 [json_name = "private_host"];
+
+  string private_uri = 5 [json_name = "private_uri"];
+
+  string db_name = 6 [json_name = "db_name"];
+
+  string host = 7;
+
+  string id = 8;
+
+  string password = 9;
+
+  int64 port = 10;
+
+  int64 size = 11;
+
+  string uri = 12;
+
+  string user = 13;
+}
+
+//DigitaloceanDatabaseReplica version is 0
+message DigitaloceanDatabaseReplica {
+  string size = 1;
+
+  string uri = 2;
+
+  string private_host = 3 [json_name = "private_host"];
+
+  string private_uri = 4 [json_name = "private_uri"];
+
+  repeated string tags = 5;
+
+  string cluster_id = 6 [json_name = "cluster_id"];
+
+  string name = 7;
+
+  string password = 8;
+
+  int64 port = 9;
+
+  string region = 10;
+
+  string user = 11;
+
+  string database = 12;
+
+  string id = 13;
+
+  string host = 14;
+}
+
 //DigitaloceanFloatingIpAssignment version is 0
 message DigitaloceanFloatingIpAssignment {
   int64 droplet_id = 1 [json_name = "droplet_id"];
@@ -539,25 +379,185 @@ message DigitaloceanFloatingIpAssignment {
   string ip_address = 3 [json_name = "ip_address"];
 }
 
-//DigitaloceanSpacesBucket version is 0
-message DigitaloceanSpacesBucket {
-  //Canned ACL applied on bucket creation
-  string acl = 1;
+//DigitaloceanVolumeSnapshot version is 0
+message DigitaloceanVolumeSnapshot {
+  string created_at = 1 [json_name = "created_at"];
 
-  //The FQDN of the bucket
-  string bucket_domain_name = 2 [json_name = "bucket_domain_name"];
+  string id = 2;
 
-  //Unless true, the bucket will only be destroyed if empty
-  bool force_destroy = 3 [json_name = "force_destroy"];
+  int64 min_disk_size = 3 [json_name = "min_disk_size"];
+
+  string name = 4;
+
+  repeated string regions = 5;
+
+  int64 size = 6;
+
+  string volume_id = 7 [json_name = "volume_id"];
+}
+
+//DigitaloceanTag version is 0
+message DigitaloceanTag {
+  string id = 1;
+
+  string name = 2;
+}
+
+//DigitaloceanKubernetesCluster version is 1
+message DigitaloceanKubernetesCluster {
+  string cluster_subnet = 1 [json_name = "cluster_subnet"];
+
+  string created_at = 2 [json_name = "created_at"];
+
+  string endpoint = 3;
 
   string id = 4;
 
-  //Bucket name
-  string name = 5;
+  string ipv4_address = 5 [json_name = "ipv4_address"];
 
-  //Bucket region
-  string region = 6;
+  repeated KubeConfig kube_config = 6 [json_name = "kube_config"];
 
-  //the uniform resource name for the bucket
-  string urn = 7;
+  string name = 7;
+
+  string region = 8;
+
+  string service_subnet = 9 [json_name = "service_subnet"];
+
+  string version = 10;
+
+  string status = 11;
+
+  repeated string tags = 12;
+
+  string updated_at = 13 [json_name = "updated_at"];
+
+  message KubeConfig {
+    string client_key = 1 [json_name = "client_key"];
+
+    string cluster_ca_certificate = 2 [json_name = "cluster_ca_certificate"];
+
+    string expires_at = 3 [json_name = "expires_at"];
+
+    string host = 4;
+
+    string raw_config = 5 [json_name = "raw_config"];
+
+    string token = 6;
+
+    string client_certificate = 7 [json_name = "client_certificate"];
+  }
+}
+
+//DigitaloceanSshKey version is 0
+message DigitaloceanSshKey {
+  string fingerprint = 1;
+
+  string id = 2;
+
+  string name = 3;
+
+  string public_key = 4 [json_name = "public_key"];
+}
+
+//DigitaloceanDatabaseUser version is 0
+message DigitaloceanDatabaseUser {
+  string cluster_id = 1 [json_name = "cluster_id"];
+
+  string id = 2;
+
+  string name = 3;
+
+  string password = 4;
+
+  string role = 5;
+}
+
+//DigitaloceanRecord version is 0
+message DigitaloceanRecord {
+  string value = 1;
+
+  int64 weight = 2;
+
+  string domain = 3;
+
+  string fqdn = 4;
+
+  string id = 5;
+
+  int64 port = 6;
+
+  string tag = 7;
+
+  string type = 8;
+
+  int64 flags = 9;
+
+  string name = 10;
+
+  int64 priority = 11;
+
+  int64 ttl = 12;
+}
+
+//DigitaloceanDropletSnapshot version is 0
+message DigitaloceanDropletSnapshot {
+  string name = 1;
+
+  repeated string regions = 2;
+
+  int64 size = 3;
+
+  string created_at = 4 [json_name = "created_at"];
+
+  string droplet_id = 5 [json_name = "droplet_id"];
+
+  string id = 6;
+
+  int64 min_disk_size = 7 [json_name = "min_disk_size"];
+}
+
+//DigitaloceanDomain version is 0
+message DigitaloceanDomain {
+  string ip_address = 1 [json_name = "ip_address"];
+
+  string name = 2;
+
+  string urn = 3;
+
+  string id = 4;
+}
+
+//DigitaloceanLoadbalancer version is 0
+message DigitaloceanLoadbalancer {
+  repeated int64 droplet_ids = 1 [json_name = "droplet_ids"];
+
+  string name = 2;
+
+  string region = 3;
+
+  //the uniform resource name for the load balancer
+  string urn = 4;
+
+  string algorithm = 5;
+
+  bool enable_proxy_protocol = 6 [json_name = "enable_proxy_protocol"];
+
+  string id = 7;
+
+  string ip = 8;
+
+  bool redirect_http_to_https = 9 [json_name = "redirect_http_to_https"];
+
+  string status = 10;
+
+  string droplet_tag = 11 [json_name = "droplet_tag"];
+}
+
+//DigitaloceanDatabaseDb version is 0
+message DigitaloceanDatabaseDb {
+  string cluster_id = 1 [json_name = "cluster_id"];
+
+  string id = 2;
+
+  string name = 3;
 }
