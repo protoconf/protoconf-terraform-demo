@@ -1,0 +1,57 @@
+{
+  "protoFile": "terraform/terraform.proto",
+  "value": {
+    "@type": "type.googleapis.com/terraform.Terraform",
+    "resource": {
+      "digitalocean_droplet": {
+        "serverams30": {
+          "ssh_keys": [
+            "25982933"
+          ],
+          "private_networking": true,
+          "size": "s-1vcpu-1gb",
+          "name": "${random_pet.serverams30.id}",
+          "tags": [
+            "server"
+          ],
+          "region": "ams3",
+          "image": "ubuntu-18-04-x64",
+          "user_data": "#!/bin/bash\necho \"Installing dependencies ...\"\nsudo apt-get update\nsudo apt-get install -y unzip curl jq dnsutils\n# Install Docker\nsudo apt-get install -y      apt-transport-https      ca-certificates      curl      gnupg-agent      software-properties-common\n\ncurl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -\nsudo add-apt-repository    \"deb [arch=amd64] https://download.docker.com/linux/ubuntu    $(lsb_release -cs)    stable\"\nsudo apt-get update\nsudo apt-get install -y docker-ce docker-ce-cli containerd.io\necho \"Determining Consul version to install ...\"\nCHECKPOINT_URL=\"https://checkpoint-api.hashicorp.com/v1/check\"\nCONSUL_DEMO_VERSION=$(curl -s \"$${CHECKPOINT_URL}\"/consul | jq .current_version | tr -d '\"')\necho \"Fetching Consul version $${CONSUL_DEMO_VERSION} ...\"\ncd /tmp/\ncurl -s https://releases.hashicorp.com/consul/$${CONSUL_DEMO_VERSION}/consul_$${CONSUL_DEMO_VERSION}_linux_amd64.zip -o consul.zip\necho \"Installing Consul version $${CONSUL_DEMO_VERSION} ...\"\nunzip consul.zip\nsudo chmod +x consul\nsudo mv consul /usr/local/bin/consul\nsudo mkdir /etc/consul.d\nsudo chmod a+w /etc/consul.d\nsudo mkdir -p /opt/consul/data\n\ncat \u003c\u003cSYSTEMD | sudo tee /etc/systemd/system/consul.service\n[Unit]\nDescription=consul\nDocumentation=http://localhost\n\n[Service]\nType=notify\nRestart=always\nRestartSec=5s\nLimitNOFILE=40000\nTimeoutStartSec=0\n\nExecStart=/usr/local/bin/consul agent -server -bootstrap-expect=3 -ui -client 0.0.0.0 -advertise '{{GetPublicIP}}' -datacenter=ams3 -data-dir=/opt/consul/data -retry-join 'provider=digitalocean api_token=${var.digitalocean_token} region=ams3 tag_name=server'\n\n[Install]\nWantedBy=multi-user.target\nSYSTEMD\n\nsudo systemctl daemon-reload\nsudo systemctl enable consul\nsudo systemctl start consul\necho \"Determining Nomad version to install ...\"\nCHECKPOINT_URL=\"https://checkpoint-api.hashicorp.com/v1/check\"\nNOMAD_VERSION=$(curl -s \"$${CHECKPOINT_URL}\"/nomad | jq .current_version | tr -d '\"')\necho \"Fetching Consul version $${NOMAD_VERSION} ...\"\ncd /tmp/\ncurl -s https://releases.hashicorp.com/nomad/$${NOMAD_VERSION}/nomad_$${NOMAD_VERSION}_linux_amd64.zip -o nomad.zip\necho \"Installing Nomad version $${NOMAD_VERSION} ...\"\nunzip nomad.zip\nsudo chmod +x nomad\nsudo mv nomad /usr/local/bin/nomad\nsudo mkdir /etc/nomad.d\nsudo chmod a+w /etc/nomad.d\nsudo mkdir -p /opt/nomad/data\n\ncat \u003c\u003cSYSTEMD | sudo tee /etc/systemd/system/nomad.service\n[Unit]\nDescription=nomad\nDocumentation=http://localhost\n\n[Service]\nType=notify\nRestart=always\nRestartSec=5s\nLimitNOFILE=40000\nTimeoutStartSec=0\n\nExecStart=/usr/local/bin/nomad agent -server -bootstrap-expect=3 -data-dir=/opt/nomad/data\n\n[Install]\nWantedBy=multi-user.target\nSYSTEMD\n\nsudo systemctl daemon-reload\nsudo systemctl enable nomad\nsudo systemctl start nomad\n"
+        },
+        "serverams31": {
+          "ssh_keys": [
+            "25982933"
+          ],
+          "private_networking": true,
+          "size": "s-1vcpu-1gb",
+          "name": "${random_pet.serverams31.id}",
+          "tags": [
+            "server"
+          ],
+          "region": "ams3",
+          "image": "ubuntu-18-04-x64",
+          "user_data": "#!/bin/bash\necho \"Installing dependencies ...\"\nsudo apt-get update\nsudo apt-get install -y unzip curl jq dnsutils\n# Install Docker\nsudo apt-get install -y      apt-transport-https      ca-certificates      curl      gnupg-agent      software-properties-common\n\ncurl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -\nsudo add-apt-repository    \"deb [arch=amd64] https://download.docker.com/linux/ubuntu    $(lsb_release -cs)    stable\"\nsudo apt-get update\nsudo apt-get install -y docker-ce docker-ce-cli containerd.io\necho \"Determining Consul version to install ...\"\nCHECKPOINT_URL=\"https://checkpoint-api.hashicorp.com/v1/check\"\nCONSUL_DEMO_VERSION=$(curl -s \"$${CHECKPOINT_URL}\"/consul | jq .current_version | tr -d '\"')\necho \"Fetching Consul version $${CONSUL_DEMO_VERSION} ...\"\ncd /tmp/\ncurl -s https://releases.hashicorp.com/consul/$${CONSUL_DEMO_VERSION}/consul_$${CONSUL_DEMO_VERSION}_linux_amd64.zip -o consul.zip\necho \"Installing Consul version $${CONSUL_DEMO_VERSION} ...\"\nunzip consul.zip\nsudo chmod +x consul\nsudo mv consul /usr/local/bin/consul\nsudo mkdir /etc/consul.d\nsudo chmod a+w /etc/consul.d\nsudo mkdir -p /opt/consul/data\n\ncat \u003c\u003cSYSTEMD | sudo tee /etc/systemd/system/consul.service\n[Unit]\nDescription=consul\nDocumentation=http://localhost\n\n[Service]\nType=notify\nRestart=always\nRestartSec=5s\nLimitNOFILE=40000\nTimeoutStartSec=0\n\nExecStart=/usr/local/bin/consul agent -server -bootstrap-expect=3 -ui -client 0.0.0.0 -advertise '{{GetPublicIP}}' -datacenter=ams3 -data-dir=/opt/consul/data -retry-join 'provider=digitalocean api_token=${var.digitalocean_token} region=ams3 tag_name=server'\n\n[Install]\nWantedBy=multi-user.target\nSYSTEMD\n\nsudo systemctl daemon-reload\nsudo systemctl enable consul\nsudo systemctl start consul\necho \"Determining Nomad version to install ...\"\nCHECKPOINT_URL=\"https://checkpoint-api.hashicorp.com/v1/check\"\nNOMAD_VERSION=$(curl -s \"$${CHECKPOINT_URL}\"/nomad | jq .current_version | tr -d '\"')\necho \"Fetching Consul version $${NOMAD_VERSION} ...\"\ncd /tmp/\ncurl -s https://releases.hashicorp.com/nomad/$${NOMAD_VERSION}/nomad_$${NOMAD_VERSION}_linux_amd64.zip -o nomad.zip\necho \"Installing Nomad version $${NOMAD_VERSION} ...\"\nunzip nomad.zip\nsudo chmod +x nomad\nsudo mv nomad /usr/local/bin/nomad\nsudo mkdir /etc/nomad.d\nsudo chmod a+w /etc/nomad.d\nsudo mkdir -p /opt/nomad/data\n\ncat \u003c\u003cSYSTEMD | sudo tee /etc/systemd/system/nomad.service\n[Unit]\nDescription=nomad\nDocumentation=http://localhost\n\n[Service]\nType=notify\nRestart=always\nRestartSec=5s\nLimitNOFILE=40000\nTimeoutStartSec=0\n\nExecStart=/usr/local/bin/nomad agent -server -bootstrap-expect=3 -data-dir=/opt/nomad/data\n\n[Install]\nWantedBy=multi-user.target\nSYSTEMD\n\nsudo systemctl daemon-reload\nsudo systemctl enable nomad\nsudo systemctl start nomad\n"
+        },
+        "serverams32": {
+          "ssh_keys": [
+            "25982933"
+          ],
+          "private_networking": true,
+          "size": "s-1vcpu-1gb",
+          "name": "${random_pet.serverams32.id}",
+          "tags": [
+            "server"
+          ],
+          "region": "ams3",
+          "image": "ubuntu-18-04-x64",
+          "user_data": "#!/bin/bash\necho \"Installing dependencies ...\"\nsudo apt-get update\nsudo apt-get install -y unzip curl jq dnsutils\n# Install Docker\nsudo apt-get install -y      apt-transport-https      ca-certificates      curl      gnupg-agent      software-properties-common\n\ncurl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -\nsudo add-apt-repository    \"deb [arch=amd64] https://download.docker.com/linux/ubuntu    $(lsb_release -cs)    stable\"\nsudo apt-get update\nsudo apt-get install -y docker-ce docker-ce-cli containerd.io\necho \"Determining Consul version to install ...\"\nCHECKPOINT_URL=\"https://checkpoint-api.hashicorp.com/v1/check\"\nCONSUL_DEMO_VERSION=$(curl -s \"$${CHECKPOINT_URL}\"/consul | jq .current_version | tr -d '\"')\necho \"Fetching Consul version $${CONSUL_DEMO_VERSION} ...\"\ncd /tmp/\ncurl -s https://releases.hashicorp.com/consul/$${CONSUL_DEMO_VERSION}/consul_$${CONSUL_DEMO_VERSION}_linux_amd64.zip -o consul.zip\necho \"Installing Consul version $${CONSUL_DEMO_VERSION} ...\"\nunzip consul.zip\nsudo chmod +x consul\nsudo mv consul /usr/local/bin/consul\nsudo mkdir /etc/consul.d\nsudo chmod a+w /etc/consul.d\nsudo mkdir -p /opt/consul/data\n\ncat \u003c\u003cSYSTEMD | sudo tee /etc/systemd/system/consul.service\n[Unit]\nDescription=consul\nDocumentation=http://localhost\n\n[Service]\nType=notify\nRestart=always\nRestartSec=5s\nLimitNOFILE=40000\nTimeoutStartSec=0\n\nExecStart=/usr/local/bin/consul agent -server -bootstrap-expect=3 -ui -client 0.0.0.0 -advertise '{{GetPublicIP}}' -datacenter=ams3 -data-dir=/opt/consul/data -retry-join 'provider=digitalocean api_token=${var.digitalocean_token} region=ams3 tag_name=server'\n\n[Install]\nWantedBy=multi-user.target\nSYSTEMD\n\nsudo systemctl daemon-reload\nsudo systemctl enable consul\nsudo systemctl start consul\necho \"Determining Nomad version to install ...\"\nCHECKPOINT_URL=\"https://checkpoint-api.hashicorp.com/v1/check\"\nNOMAD_VERSION=$(curl -s \"$${CHECKPOINT_URL}\"/nomad | jq .current_version | tr -d '\"')\necho \"Fetching Consul version $${NOMAD_VERSION} ...\"\ncd /tmp/\ncurl -s https://releases.hashicorp.com/nomad/$${NOMAD_VERSION}/nomad_$${NOMAD_VERSION}_linux_amd64.zip -o nomad.zip\necho \"Installing Nomad version $${NOMAD_VERSION} ...\"\nunzip nomad.zip\nsudo chmod +x nomad\nsudo mv nomad /usr/local/bin/nomad\nsudo mkdir /etc/nomad.d\nsudo chmod a+w /etc/nomad.d\nsudo mkdir -p /opt/nomad/data\n\ncat \u003c\u003cSYSTEMD | sudo tee /etc/systemd/system/nomad.service\n[Unit]\nDescription=nomad\nDocumentation=http://localhost\n\n[Service]\nType=notify\nRestart=always\nRestartSec=5s\nLimitNOFILE=40000\nTimeoutStartSec=0\n\nExecStart=/usr/local/bin/nomad agent -server -bootstrap-expect=3 -data-dir=/opt/nomad/data\n\n[Install]\nWantedBy=multi-user.target\nSYSTEMD\n\nsudo systemctl daemon-reload\nsudo systemctl enable nomad\nsudo systemctl start nomad\n"
+        }
+      },
+      "random_pet": {
+        "serverams30": {},
+        "serverams31": {},
+        "serverams32": {}
+      }
+    }
+  }
+}
