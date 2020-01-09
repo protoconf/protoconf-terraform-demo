@@ -17,7 +17,7 @@ load(
 # load("etcd-resources.proto", "EtcdDiscovery")
 
 COUNTER = 0
-CLIENTS = 0
+CLIENTS = 2
 
 CONSUL_JOIN_ARGS = {
     "digitalocean": """-retry-join 'provider=digitalocean api_token={token} region={dc} tag_name=server'""",
