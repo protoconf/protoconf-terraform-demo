@@ -1,0 +1,172 @@
+syntax = "proto3";
+
+package terraform.tls.resources;
+
+import "terraform/meta.proto";
+
+//TlsCertRequest version is 0
+message TlsCertRequest {
+  string cert_request_pem = 1 [json_name = "cert_request_pem"];
+
+  //List of DNS names to use as subjects of the certificate
+  repeated string dns_names = 2 [json_name = "dns_names"];
+
+  string id = 3;
+
+  //List of IP addresses to use as subjects of the certificate
+  repeated string ip_addresses = 4 [json_name = "ip_addresses"];
+
+  //Name of the algorithm to use to generate the certificate's private key
+  string key_algorithm = 5 [json_name = "key_algorithm"];
+
+  //PEM-encoded private key that the certificate will belong to
+  string private_key_pem = 6 [json_name = "private_key_pem"];
+
+  //List of URIs to use as subjects of the certificate
+  repeated string uris = 7;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 8;
+
+  int32 count = 9;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 10;
+
+  string provider = 11;
+
+  terraform.meta.Lifecycle lifecycle = 12;
+}
+
+//TlsLocallySignedCert version is 0
+message TlsLocallySignedCert {
+  //Uses that are allowed for the certificate
+  repeated string allowed_uses = 1 [json_name = "allowed_uses"];
+
+  //PEM-encoded CA certificate
+  string ca_cert_pem = 2 [json_name = "ca_cert_pem"];
+
+  //Name of the algorithm used to generate the certificate's private key
+  string ca_key_algorithm = 3 [json_name = "ca_key_algorithm"];
+
+  //PEM-encoded CA private key used to sign the certificate
+  string ca_private_key_pem = 4 [json_name = "ca_private_key_pem"];
+
+  string cert_pem = 5 [json_name = "cert_pem"];
+
+  //PEM-encoded certificate request
+  string cert_request_pem = 6 [json_name = "cert_request_pem"];
+
+  //Number of hours before the certificates expiry when a new certificate will be generated
+  int64 early_renewal_hours = 7 [json_name = "early_renewal_hours"];
+
+  string id = 8;
+
+  //Whether the generated certificate will be usable as a CA certificate
+  bool is_ca_certificate = 9 [json_name = "is_ca_certificate"];
+
+  bool ready_for_renewal = 10 [json_name = "ready_for_renewal"];
+
+  //If true, the generated certificate will include a subject key identifier.
+  bool set_subject_key_id = 11 [json_name = "set_subject_key_id"];
+
+  string validity_end_time = 12 [json_name = "validity_end_time"];
+
+  //Number of hours that the certificate will remain valid for
+  int64 validity_period_hours = 13 [json_name = "validity_period_hours"];
+
+  string validity_start_time = 14 [json_name = "validity_start_time"];
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 15;
+
+  int32 count = 16;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 17;
+
+  string provider = 18;
+
+  terraform.meta.Lifecycle lifecycle = 19;
+}
+
+//TlsPrivateKey version is 0
+message TlsPrivateKey {
+  //Name of the algorithm to use to generate the private key
+  string algorithm = 1;
+
+  //ECDSA curve to use when generating a key
+  string ecdsa_curve = 2 [json_name = "ecdsa_curve"];
+
+  string id = 3;
+
+  string private_key_pem = 4 [json_name = "private_key_pem"];
+
+  string public_key_fingerprint_md5 = 5 [json_name = "public_key_fingerprint_md5"];
+
+  string public_key_openssh = 6 [json_name = "public_key_openssh"];
+
+  string public_key_pem = 7 [json_name = "public_key_pem"];
+
+  //Number of bits to use when generating an RSA key
+  int64 rsa_bits = 8 [json_name = "rsa_bits"];
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 9;
+
+  int32 count = 10;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 11;
+
+  string provider = 12;
+
+  terraform.meta.Lifecycle lifecycle = 13;
+}
+
+//TlsSelfSignedCert version is 0
+message TlsSelfSignedCert {
+  //Uses that are allowed for the certificate
+  repeated string allowed_uses = 1 [json_name = "allowed_uses"];
+
+  string cert_pem = 2 [json_name = "cert_pem"];
+
+  //List of DNS names to use as subjects of the certificate
+  repeated string dns_names = 3 [json_name = "dns_names"];
+
+  //Number of hours before the certificates expiry when a new certificate will be generated
+  int64 early_renewal_hours = 4 [json_name = "early_renewal_hours"];
+
+  string id = 5;
+
+  //List of IP addresses to use as subjects of the certificate
+  repeated string ip_addresses = 6 [json_name = "ip_addresses"];
+
+  //Whether the generated certificate will be usable as a CA certificate
+  bool is_ca_certificate = 7 [json_name = "is_ca_certificate"];
+
+  //Name of the algorithm to use to generate the certificate's private key
+  string key_algorithm = 8 [json_name = "key_algorithm"];
+
+  //PEM-encoded private key that the certificate will belong to
+  string private_key_pem = 9 [json_name = "private_key_pem"];
+
+  bool ready_for_renewal = 10 [json_name = "ready_for_renewal"];
+
+  //If true, the generated certificate will include a subject key identifier.
+  bool set_subject_key_id = 11 [json_name = "set_subject_key_id"];
+
+  //List of URIs to use as subjects of the certificate
+  repeated string uris = 12;
+
+  string validity_end_time = 13 [json_name = "validity_end_time"];
+
+  //Number of hours that the certificate will remain valid for
+  int64 validity_period_hours = 14 [json_name = "validity_period_hours"];
+
+  string validity_start_time = 15 [json_name = "validity_start_time"];
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 16;
+
+  int32 count = 17;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 18;
+
+  string provider = 19;
+
+  terraform.meta.Lifecycle lifecycle = 20;
+}

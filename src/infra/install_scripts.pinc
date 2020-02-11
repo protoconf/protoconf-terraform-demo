@@ -107,7 +107,7 @@ def consul_setup(role="server", dc="dc1", additional_args=""):
     """
     agent_args = []
     if role == "server":
-      agent_args.append("-server -bootstrap-expect=3")
+      agent_args.append("-server -bootstrap-expect=5")
 
     agent_args.append("""-ui -client 0.0.0.0 -advertise '{{GetPublicIP}}'""")
     agent_args.append("-datacenter=" + dc)

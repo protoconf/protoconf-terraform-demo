@@ -2,105 +2,188 @@ syntax = "proto3";
 
 package terraform.random.resources;
 
-//RandomShuffle version is 0
-message RandomShuffle {
-  map<string, string> keepers = 1;
+import "terraform/meta.proto";
 
-  repeated string result = 2;
+//RandomId version is 0
+message RandomId {
+  string b64 = 1;
 
-  int64 result_count = 3 [json_name = "result_count"];
+  string b64_std = 2 [json_name = "b64_std"];
 
-  string seed = 4;
+  string b64_url = 3 [json_name = "b64_url"];
 
-  string id = 5;
+  int64 byte_length = 4 [json_name = "byte_length"];
 
-  repeated string input = 6;
-}
+  string dec = 5;
 
-//RandomPet version is 0
-message RandomPet {
-  int64 length = 1;
+  string hex = 6;
 
-  string prefix = 2;
+  string id = 7;
 
-  string separator = 3;
+  map<string, string> keepers = 8;
 
-  string id = 4;
+  string prefix = 9;
 
-  map<string, string> keepers = 5;
-}
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 10;
 
-//RandomString version is 1
-message RandomString {
-  int64 length = 1;
+  int32 count = 11;
 
-  bool lower = 2;
+  terraform.meta.MetaFields.ForEachEntry for_each = 12;
 
-  int64 min_special = 3 [json_name = "min_special"];
+  string provider = 13;
 
-  bool number = 4;
-
-  bool special = 5;
-
-  bool upper = 6;
-
-  string result = 7;
-
-  string id = 8;
-
-  map<string, string> keepers = 9;
-
-  int64 min_lower = 10 [json_name = "min_lower"];
-
-  int64 min_numeric = 11 [json_name = "min_numeric"];
-
-  int64 min_upper = 12 [json_name = "min_upper"];
-
-  string override_special = 13 [json_name = "override_special"];
-}
-
-//RandomPassword version is 0
-message RandomPassword {
-  int64 min_lower = 1 [json_name = "min_lower"];
-
-  int64 min_numeric = 2 [json_name = "min_numeric"];
-
-  int64 min_special = 3 [json_name = "min_special"];
-
-  int64 min_upper = 4 [json_name = "min_upper"];
-
-  bool number = 5;
-
-  string id = 6;
-
-  int64 length = 7;
-
-  bool lower = 8;
-
-  string override_special = 9 [json_name = "override_special"];
-
-  string result = 10;
-
-  map<string, string> keepers = 11;
-
-  bool special = 12;
-
-  bool upper = 13;
+  terraform.meta.Lifecycle lifecycle = 14;
 }
 
 //RandomInteger version is 0
 message RandomInteger {
-  int64 max = 1;
+  string id = 1;
 
-  int64 min = 2;
+  map<string, string> keepers = 2;
 
-  int64 result = 3;
+  int64 max = 3;
 
-  string seed = 4;
+  int64 min = 4;
 
-  string id = 5;
+  int64 result = 5;
 
-  map<string, string> keepers = 6;
+  string seed = 6;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 7;
+
+  int32 count = 8;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 9;
+
+  string provider = 10;
+
+  terraform.meta.Lifecycle lifecycle = 11;
+}
+
+//RandomPassword version is 0
+message RandomPassword {
+  string id = 1;
+
+  map<string, string> keepers = 2;
+
+  int64 length = 3;
+
+  bool lower = 4;
+
+  int64 min_lower = 5 [json_name = "min_lower"];
+
+  int64 min_numeric = 6 [json_name = "min_numeric"];
+
+  int64 min_special = 7 [json_name = "min_special"];
+
+  int64 min_upper = 8 [json_name = "min_upper"];
+
+  bool number = 9;
+
+  string override_special = 10 [json_name = "override_special"];
+
+  string result = 11;
+
+  bool special = 12;
+
+  bool upper = 13;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 14;
+
+  int32 count = 15;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 16;
+
+  string provider = 17;
+
+  terraform.meta.Lifecycle lifecycle = 18;
+}
+
+//RandomPet version is 0
+message RandomPet {
+  string id = 1;
+
+  map<string, string> keepers = 2;
+
+  int64 length = 3;
+
+  string prefix = 4;
+
+  string separator = 5;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 6;
+
+  int32 count = 7;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 8;
+
+  string provider = 9;
+
+  terraform.meta.Lifecycle lifecycle = 10;
+}
+
+//RandomShuffle version is 0
+message RandomShuffle {
+  string id = 1;
+
+  repeated string input = 2;
+
+  map<string, string> keepers = 3;
+
+  repeated string result = 4;
+
+  int64 result_count = 5 [json_name = "result_count"];
+
+  string seed = 6;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 7;
+
+  int32 count = 8;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 9;
+
+  string provider = 10;
+
+  terraform.meta.Lifecycle lifecycle = 11;
+}
+
+//RandomString version is 1
+message RandomString {
+  string id = 1;
+
+  map<string, string> keepers = 2;
+
+  int64 length = 3;
+
+  bool lower = 4;
+
+  int64 min_lower = 5 [json_name = "min_lower"];
+
+  int64 min_numeric = 6 [json_name = "min_numeric"];
+
+  int64 min_special = 7 [json_name = "min_special"];
+
+  int64 min_upper = 8 [json_name = "min_upper"];
+
+  bool number = 9;
+
+  string override_special = 10 [json_name = "override_special"];
+
+  string result = 11;
+
+  bool special = 12;
+
+  bool upper = 13;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 14;
+
+  int32 count = 15;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 16;
+
+  string provider = 17;
+
+  terraform.meta.Lifecycle lifecycle = 18;
 }
 
 //RandomUuid version is 0
@@ -110,25 +193,14 @@ message RandomUuid {
   map<string, string> keepers = 2;
 
   string result = 3;
-}
 
-//RandomId version is 0
-message RandomId {
-  string hex = 1;
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 4;
 
-  string id = 2;
+  int32 count = 5;
 
-  map<string, string> keepers = 3;
+  terraform.meta.MetaFields.ForEachEntry for_each = 6;
 
-  string prefix = 4;
+  string provider = 7;
 
-  string b64_std = 5 [json_name = "b64_std"];
-
-  string dec = 6;
-
-  int64 byte_length = 7 [json_name = "byte_length"];
-
-  string b64 = 8;
-
-  string b64_url = 9 [json_name = "b64_url"];
+  terraform.meta.Lifecycle lifecycle = 8;
 }

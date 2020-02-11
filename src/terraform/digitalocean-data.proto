@@ -2,109 +2,75 @@ syntax = "proto3";
 
 package terraform.digitalocean.data;
 
-//DigitaloceanLoadbalancer version is 0
-message DigitaloceanLoadbalancer {
-  //health check settings for the load balancer
-  repeated Healthcheck healthcheck = 1;
+import "terraform/meta.proto";
 
-  //public-facing IP address of the load balancer
-  string ip = 2;
+//DigitaloceanAccount version is 0
+message DigitaloceanAccount {
+  //The total number of Droplets current user or team may have active at one time.
+  int64 droplet_limit = 1 [json_name = "droplet_limit"];
 
-  //whether http requests will be redirected to https
-  bool redirect_http_to_https = 3 [json_name = "redirect_http_to_https"];
+  //The email address used by the current user to register for DigitalOcean.
+  string email = 2;
 
-  //whether PROXY Protocol should be used to pass information from connecting client requests to the backend service
-  bool enable_proxy_protocol = 4 [json_name = "enable_proxy_protocol"];
+  //If true, the user has verified their account via email. False otherwise.
+  bool email_verified = 3 [json_name = "email_verified"];
+
+  //The total number of Floating IPs the current user or team may have.
+  int64 floating_ip_limit = 4 [json_name = "floating_ip_limit"];
 
   string id = 5;
 
-  //current state of the Load Balancer
+  //This value is one of "active", "warning" or "locked".
   string status = 6;
 
-  //algorithm used to determine which backend Droplet will be selected by a client
-  string algorithm = 7;
+  //A human-readable message giving more details about the status of the account.
+  string status_message = 7 [json_name = "status_message"];
 
-  //sticky sessions settings for the load balancer
-  repeated StickySessions sticky_sessions = 8 [json_name = "sticky_sessions"];
+  //The unique universal identifier for the current user.
+  string uuid = 8;
 
-  //the uniform resource name for the load balancer
-  string urn = 9;
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 9;
 
-  //name of the load balancer
-  string name = 10;
+  int32 count = 10;
 
-  //the region that the load blanacer is deployed in
-  string region = 11;
+  terraform.meta.MetaFields.ForEachEntry for_each = 11;
 
-  //ids of the droplets assigned to the load balancer
-  repeated int64 droplet_ids = 12 [json_name = "droplet_ids"];
+  string provider = 12;
 
-  //the name of a tag corresponding to droplets assigned to the load balancer
-  string droplet_tag = 13 [json_name = "droplet_tag"];
-
-  //list of forwarding rules of the load balancer
-  repeated ForwardingRule forwarding_rule = 14 [json_name = "forwarding_rule"];
-
-  message Healthcheck {
-    string path = 1;
-
-    int64 port = 2;
-
-    string protocol = 3;
-
-    int64 response_timeout_seconds = 4 [json_name = "response_timeout_seconds"];
-
-    int64 unhealthy_threshold = 5 [json_name = "unhealthy_threshold"];
-
-    int64 check_interval_seconds = 6 [json_name = "check_interval_seconds"];
-
-    int64 healthy_threshold = 7 [json_name = "healthy_threshold"];
-  }
-
-  message StickySessions {
-    string type = 1;
-
-    string cookie_name = 2 [json_name = "cookie_name"];
-
-    int64 cookie_ttl_seconds = 3 [json_name = "cookie_ttl_seconds"];
-  }
-
-  message ForwardingRule {
-    string entry_protocol = 1 [json_name = "entry_protocol"];
-
-    int64 target_port = 2 [json_name = "target_port"];
-
-    string target_protocol = 3 [json_name = "target_protocol"];
-
-    bool tls_passthrough = 4 [json_name = "tls_passthrough"];
-
-    string certificate_id = 5 [json_name = "certificate_id"];
-
-    int64 entry_port = 6 [json_name = "entry_port"];
-  }
+  terraform.meta.Lifecycle lifecycle = 13;
 }
 
-//DigitaloceanDropletSnapshot version is 0
-message DigitaloceanDropletSnapshot {
-  string name_regex = 1 [json_name = "name_regex"];
+//DigitaloceanCertificate version is 0
+message DigitaloceanCertificate {
+  //domains for which the certificate was issued
+  repeated string domains = 1;
 
-  repeated string regions = 2;
+  string id = 2;
 
-  int64 size = 3;
+  //name of the certificate
+  string name = 3;
 
-  string created_at = 4 [json_name = "created_at"];
+  //expiration date and time of the certificate
+  string not_after = 4 [json_name = "not_after"];
 
-  string droplet_id = 5 [json_name = "droplet_id"];
+  //SHA1 fingerprint of the certificate
+  string sha1_fingerprint = 5 [json_name = "sha1_fingerprint"];
 
-  string id = 6;
+  //current state of the certificate
+  string state = 6;
 
-  int64 min_disk_size = 7 [json_name = "min_disk_size"];
+  //type of the certificate
+  string type = 7;
 
-  bool most_recent = 8 [json_name = "most_recent"];
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 8;
 
-  string name = 9;
+  int32 count = 9;
 
-  string region = 10;
+  terraform.meta.MetaFields.ForEachEntry for_each = 10;
+
+  string provider = 11;
+
+  terraform.meta.Lifecycle lifecycle = 12;
 }
 
 //DigitaloceanDatabaseCluster version is 0
@@ -113,385 +79,53 @@ message DigitaloceanDatabaseCluster {
 
   string engine = 2;
 
-  string id = 3;
+  string host = 3;
 
-  repeated MaintenanceWindow maintenance_window = 4 [json_name = "maintenance_window"];
+  string id = 4;
 
-  int64 node_count = 5 [json_name = "node_count"];
+  repeated MaintenanceWindow maintenance_window = 5 [json_name = "maintenance_window"];
 
-  int64 port = 6;
+  string name = 6;
 
-  string private_host = 7 [json_name = "private_host"];
+  int64 node_count = 7 [json_name = "node_count"];
 
-  string private_uri = 8 [json_name = "private_uri"];
+  string password = 8;
 
-  string region = 9;
+  int64 port = 9;
 
-  string version = 10;
+  string private_host = 10 [json_name = "private_host"];
 
-  string name = 11;
+  string private_uri = 11 [json_name = "private_uri"];
 
-  string uri = 12;
+  string region = 12;
 
-  string urn = 13;
+  string size = 13;
 
-  string user = 14;
+  repeated string tags = 14;
 
-  string host = 15;
+  string uri = 15;
 
-  string password = 16;
+  string urn = 16;
 
-  string size = 17;
+  string user = 17;
 
-  repeated string tags = 18;
+  string version = 18;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 19;
+
+  int32 count = 20;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 21;
+
+  string provider = 22;
+
+  terraform.meta.Lifecycle lifecycle = 23;
 
   message MaintenanceWindow {
-    string hour = 1;
+    string day = 1;
 
-    string day = 2;
+    string hour = 2;
   }
-}
-
-//DigitaloceanCertificate version is 0
-message DigitaloceanCertificate {
-  string id = 1;
-
-  //name of the certificate
-  string name = 2;
-
-  //expiration date and time of the certificate
-  string not_after = 3 [json_name = "not_after"];
-
-  //SHA1 fingerprint of the certificate
-  string sha1_fingerprint = 4 [json_name = "sha1_fingerprint"];
-
-  //current state of the certificate
-  string state = 5;
-
-  //type of the certificate
-  string type = 6;
-
-  //domains for which the certificate was issued
-  repeated string domains = 7;
-}
-
-//DigitaloceanSshKey version is 0
-message DigitaloceanSshKey {
-  //fingerprint of the ssh key
-  string fingerprint = 1;
-
-  string id = 2;
-
-  //name of the ssh key
-  string name = 3;
-
-  //public key part of the ssh key
-  string public_key = 4 [json_name = "public_key"];
-}
-
-//DigitaloceanSizes version is 0
-message DigitaloceanSizes {
-  string id = 1;
-
-  //List of filtered digital ocean sizes.
-  repeated Sizes sizes = 2;
-
-  message Sizes {
-    int64 price_hourly = 1 [json_name = "price_hourly"];
-
-    repeated string regions = 2;
-
-    int64 memory = 3;
-
-    int64 transfer = 4;
-
-    int64 vcpus = 5;
-
-    bool available = 6;
-
-    int64 disk = 7;
-
-    int64 price_monthly = 8 [json_name = "price_monthly"];
-
-    string slug = 9;
-  }
-}
-
-//DigitaloceanDroplet version is 0
-message DigitaloceanDroplet {
-  //the droplets monthly price
-  int64 price_monthly = 1 [json_name = "price_monthly"];
-
-  //the region that the droplet instance is deployed in
-  string region = 2;
-
-  //the creation date for the Droplet
-  string created_at = 3 [json_name = "created_at"];
-
-  //the droplets public ipv6 address
-  string ipv6_address = 4 [json_name = "ipv6_address"];
-
-  //the droplets private ipv4 address
-  string ipv6_address_private = 5 [json_name = "ipv6_address_private"];
-
-  //whether the droplet has been locked
-  bool locked = 6;
-
-  //whether the droplet has monitoring enabled
-  bool monitoring = 7;
-
-  //name of the droplet
-  string name = 8;
-
-  //list of volumes attached to the droplet
-  repeated string volume_ids = 9 [json_name = "volume_ids"];
-
-  //whether the droplet has backups enabled
-  bool backups = 10;
-
-  string id = 11;
-
-  //the droplets hourly price
-  int64 price_hourly = 12 [json_name = "price_hourly"];
-
-  //state of the droplet instance
-  string status = 13;
-
-  //unique tag of the droplet
-  string tag = 14;
-
-  //the uniform resource name for the Droplet
-  string urn = 15;
-
-  //the size of the droplets disk in gigabytes
-  int64 disk = 16;
-
-  //the droplets public ipv4 address
-  string ipv4_address = 17 [json_name = "ipv4_address"];
-
-  //whether the droplet has private networking enabled
-  bool private_networking = 18 [json_name = "private_networking"];
-
-  //the current size of the Droplet
-  string size = 19;
-
-  repeated string tags = 20;
-
-  //the image id or slug of the Droplet
-  string image = 21;
-
-  //the droplets private ipv4 address
-  string ipv4_address_private = 22 [json_name = "ipv4_address_private"];
-
-  //whether the droplet has ipv6 enabled
-  bool ipv6 = 23;
-
-  //memory of the droplet in megabytes
-  int64 memory = 24;
-
-  //the number of virtual cpus
-  int64 vcpus = 25;
-}
-
-//DigitaloceanKubernetesCluster version is 0
-message DigitaloceanKubernetesCluster {
-  string cluster_subnet = 1 [json_name = "cluster_subnet"];
-
-  string id = 2;
-
-  string ipv4_address = 3 [json_name = "ipv4_address"];
-
-  string region = 4;
-
-  string created_at = 5 [json_name = "created_at"];
-
-  string name = 6;
-
-  string service_subnet = 7 [json_name = "service_subnet"];
-
-  string updated_at = 8 [json_name = "updated_at"];
-
-  string version = 9;
-
-  string endpoint = 10;
-
-  repeated NodePool node_pool = 11 [json_name = "node_pool"];
-
-  repeated string tags = 12;
-
-  repeated KubeConfig kube_config = 13 [json_name = "kube_config"];
-
-  string status = 14;
-
-  message NodePool {
-    string id = 1;
-
-    int64 max_nodes = 2 [json_name = "max_nodes"];
-
-    string name = 3;
-
-    int64 min_nodes = 4 [json_name = "min_nodes"];
-
-    repeated string nodes = 5;
-
-    string size = 6;
-
-    int64 node_count = 7 [json_name = "node_count"];
-
-    repeated string tags = 8;
-
-    int64 actual_node_count = 9 [json_name = "actual_node_count"];
-
-    bool auto_scale = 10 [json_name = "auto_scale"];
-  }
-
-  message KubeConfig {
-    string client_key = 1 [json_name = "client_key"];
-
-    string cluster_ca_certificate = 2 [json_name = "cluster_ca_certificate"];
-
-    string expires_at = 3 [json_name = "expires_at"];
-
-    string host = 4;
-
-    string raw_config = 5 [json_name = "raw_config"];
-
-    string token = 6;
-
-    string client_certificate = 7 [json_name = "client_certificate"];
-  }
-}
-
-//DigitaloceanAccount version is 0
-message DigitaloceanAccount {
-  //The unique universal identifier for the current user.
-  string uuid = 1;
-
-  //The total number of Droplets current user or team may have active at one time.
-  int64 droplet_limit = 2 [json_name = "droplet_limit"];
-
-  //The email address used by the current user to register for DigitalOcean.
-  string email = 3;
-
-  //If true, the user has verified their account via email. False otherwise.
-  bool email_verified = 4 [json_name = "email_verified"];
-
-  //The total number of Floating IPs the current user or team may have.
-  int64 floating_ip_limit = 5 [json_name = "floating_ip_limit"];
-
-  string id = 6;
-
-  //This value is one of "active", "warning" or "locked".
-  string status = 7;
-
-  //A human-readable message giving more details about the status of the account.
-  string status_message = 8 [json_name = "status_message"];
-}
-
-//DigitaloceanFloatingIp version is 0
-message DigitaloceanFloatingIp {
-  //the uniform resource name for the floating ip
-  string urn = 1;
-
-  //the droplet id that the floating ip has been assigned to.
-  int64 droplet_id = 2 [json_name = "droplet_id"];
-
-  string id = 3;
-
-  //floating ip address
-  string ip_address = 4 [json_name = "ip_address"];
-
-  //the region that the floating ip is reserved to
-  string region = 5;
-}
-
-//DigitaloceanTag version is 0
-message DigitaloceanTag {
-  string id = 1;
-
-  //name of the tag
-  string name = 2;
-}
-
-//DigitaloceanVolumeSnapshot version is 0
-message DigitaloceanVolumeSnapshot {
-  string name_regex = 1 [json_name = "name_regex"];
-
-  repeated string regions = 2;
-
-  int64 size = 3;
-
-  bool most_recent = 4 [json_name = "most_recent"];
-
-  string name = 5;
-
-  int64 min_disk_size = 6 [json_name = "min_disk_size"];
-
-  string region = 7;
-
-  string volume_id = 8 [json_name = "volume_id"];
-
-  string created_at = 9 [json_name = "created_at"];
-
-  string id = 10;
-}
-
-//DigitaloceanImage version is 0
-message DigitaloceanImage {
-  //list of the regions that the image is available in
-  repeated string regions = 1;
-
-  //type of the image
-  string type = 2;
-
-  //slug or id of the image
-  string image = 3;
-
-  //Is the image private or non-private
-  bool private = 4;
-
-  //minimum disk size required by the image
-  int64 min_disk_size = 5 [json_name = "min_disk_size"];
-
-  //name of the image
-  string name = 6;
-
-  //slug of the image
-  string slug = 7;
-
-  //distribution of the OS of the image
-  string distribution = 8;
-
-  string id = 9;
-}
-
-//DigitaloceanVolume version is 0
-message DigitaloceanVolume {
-  //list of droplet ids the volume is attached to
-  repeated int64 droplet_ids = 1 [json_name = "droplet_ids"];
-
-  //name of the volume
-  string name = 2;
-
-  //the size of the volume in gigabytes
-  int64 size = 3;
-
-  //the iniform resource name for the volume
-  string urn = 4;
-
-  //volume description
-  string description = 5;
-
-  //the label currently applied to the filesystem
-  string filesystem_label = 6 [json_name = "filesystem_label"];
-
-  //the type of filesystem currently in-use on the volume
-  string filesystem_type = 7 [json_name = "filesystem_type"];
-
-  string id = 8;
-
-  //the region that the volume is provisioned in
-  string region = 9;
 }
 
 //DigitaloceanDomain version is 0
@@ -509,39 +143,567 @@ message DigitaloceanDomain {
 
   //zone file of the domain
   string zone_file = 5 [json_name = "zone_file"];
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 6;
+
+  int32 count = 7;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 8;
+
+  string provider = 9;
+
+  terraform.meta.Lifecycle lifecycle = 10;
+}
+
+//DigitaloceanDroplet version is 0
+message DigitaloceanDroplet {
+  //whether the droplet has backups enabled
+  bool backups = 1;
+
+  //the creation date for the Droplet
+  string created_at = 2 [json_name = "created_at"];
+
+  //the size of the droplets disk in gigabytes
+  int64 disk = 3;
+
+  string id = 4;
+
+  //the image id or slug of the Droplet
+  string image = 5;
+
+  //the droplets public ipv4 address
+  string ipv4_address = 6 [json_name = "ipv4_address"];
+
+  //the droplets private ipv4 address
+  string ipv4_address_private = 7 [json_name = "ipv4_address_private"];
+
+  //whether the droplet has ipv6 enabled
+  bool ipv6 = 8;
+
+  //the droplets public ipv6 address
+  string ipv6_address = 9 [json_name = "ipv6_address"];
+
+  //the droplets private ipv4 address
+  string ipv6_address_private = 10 [json_name = "ipv6_address_private"];
+
+  //whether the droplet has been locked
+  bool locked = 11;
+
+  //memory of the droplet in megabytes
+  int64 memory = 12;
+
+  //whether the droplet has monitoring enabled
+  bool monitoring = 13;
+
+  //name of the droplet
+  string name = 14;
+
+  //the droplets hourly price
+  int64 price_hourly = 15 [json_name = "price_hourly"];
+
+  //the droplets monthly price
+  int64 price_monthly = 16 [json_name = "price_monthly"];
+
+  //whether the droplet has private networking enabled
+  bool private_networking = 17 [json_name = "private_networking"];
+
+  //the region that the droplet instance is deployed in
+  string region = 18;
+
+  //the current size of the Droplet
+  string size = 19;
+
+  //state of the droplet instance
+  string status = 20;
+
+  //unique tag of the droplet
+  string tag = 21;
+
+  repeated string tags = 22;
+
+  //the uniform resource name for the Droplet
+  string urn = 23;
+
+  //the number of virtual cpus
+  int64 vcpus = 24;
+
+  //list of volumes attached to the droplet
+  repeated string volume_ids = 25 [json_name = "volume_ids"];
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 26;
+
+  int32 count = 27;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 28;
+
+  string provider = 29;
+
+  terraform.meta.Lifecycle lifecycle = 30;
+}
+
+//DigitaloceanDropletSnapshot version is 0
+message DigitaloceanDropletSnapshot {
+  string created_at = 1 [json_name = "created_at"];
+
+  string droplet_id = 2 [json_name = "droplet_id"];
+
+  string id = 3;
+
+  int64 min_disk_size = 4 [json_name = "min_disk_size"];
+
+  bool most_recent = 5 [json_name = "most_recent"];
+
+  string name = 6;
+
+  string name_regex = 7 [json_name = "name_regex"];
+
+  string region = 8;
+
+  repeated string regions = 9;
+
+  int64 size = 10;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 11;
+
+  int32 count = 12;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 13;
+
+  string provider = 14;
+
+  terraform.meta.Lifecycle lifecycle = 15;
+}
+
+//DigitaloceanFloatingIp version is 0
+message DigitaloceanFloatingIp {
+  //the droplet id that the floating ip has been assigned to.
+  int64 droplet_id = 1 [json_name = "droplet_id"];
+
+  string id = 2;
+
+  //floating ip address
+  string ip_address = 3 [json_name = "ip_address"];
+
+  //the region that the floating ip is reserved to
+  string region = 4;
+
+  //the uniform resource name for the floating ip
+  string urn = 5;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 6;
+
+  int32 count = 7;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 8;
+
+  string provider = 9;
+
+  terraform.meta.Lifecycle lifecycle = 10;
+}
+
+//DigitaloceanImage version is 0
+message DigitaloceanImage {
+  //distribution of the OS of the image
+  string distribution = 1;
+
+  string id = 2;
+
+  //slug or id of the image
+  string image = 3;
+
+  //minimum disk size required by the image
+  int64 min_disk_size = 4 [json_name = "min_disk_size"];
+
+  //name of the image
+  string name = 5;
+
+  //Is the image private or non-private
+  bool private = 6;
+
+  //list of the regions that the image is available in
+  repeated string regions = 7;
+
+  //slug of the image
+  string slug = 8;
+
+  //type of the image
+  string type = 9;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 10;
+
+  int32 count = 11;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 12;
+
+  string provider = 13;
+
+  terraform.meta.Lifecycle lifecycle = 14;
+}
+
+//DigitaloceanKubernetesCluster version is 0
+message DigitaloceanKubernetesCluster {
+  string cluster_subnet = 1 [json_name = "cluster_subnet"];
+
+  string created_at = 2 [json_name = "created_at"];
+
+  string endpoint = 3;
+
+  string id = 4;
+
+  string ipv4_address = 5 [json_name = "ipv4_address"];
+
+  repeated KubeConfig kube_config = 6 [json_name = "kube_config"];
+
+  string name = 7;
+
+  repeated NodePool node_pool = 8 [json_name = "node_pool"];
+
+  string region = 9;
+
+  string service_subnet = 10 [json_name = "service_subnet"];
+
+  string status = 11;
+
+  repeated string tags = 12;
+
+  string updated_at = 13 [json_name = "updated_at"];
+
+  string version = 14;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 15;
+
+  int32 count = 16;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 17;
+
+  string provider = 18;
+
+  terraform.meta.Lifecycle lifecycle = 19;
+
+  message KubeConfig {
+    string client_certificate = 1 [json_name = "client_certificate"];
+
+    string client_key = 2 [json_name = "client_key"];
+
+    string cluster_ca_certificate = 3 [json_name = "cluster_ca_certificate"];
+
+    string expires_at = 4 [json_name = "expires_at"];
+
+    string host = 5;
+
+    string raw_config = 6 [json_name = "raw_config"];
+
+    string token = 7;
+  }
+
+  message NodePool {
+    int64 actual_node_count = 1 [json_name = "actual_node_count"];
+
+    bool auto_scale = 2 [json_name = "auto_scale"];
+
+    string id = 3;
+
+    int64 max_nodes = 4 [json_name = "max_nodes"];
+
+    int64 min_nodes = 5 [json_name = "min_nodes"];
+
+    string name = 6;
+
+    int64 node_count = 7 [json_name = "node_count"];
+
+    repeated string nodes = 8;
+
+    string size = 9;
+
+    repeated string tags = 10;
+  }
+}
+
+//DigitaloceanLoadbalancer version is 0
+message DigitaloceanLoadbalancer {
+  //algorithm used to determine which backend Droplet will be selected by a client
+  string algorithm = 1;
+
+  //ids of the droplets assigned to the load balancer
+  repeated int64 droplet_ids = 2 [json_name = "droplet_ids"];
+
+  //the name of a tag corresponding to droplets assigned to the load balancer
+  string droplet_tag = 3 [json_name = "droplet_tag"];
+
+  //whether PROXY Protocol should be used to pass information from connecting client requests to the backend service
+  bool enable_proxy_protocol = 4 [json_name = "enable_proxy_protocol"];
+
+  //list of forwarding rules of the load balancer
+  repeated ForwardingRule forwarding_rule = 5 [json_name = "forwarding_rule"];
+
+  //health check settings for the load balancer
+  repeated Healthcheck healthcheck = 6;
+
+  string id = 7;
+
+  //public-facing IP address of the load balancer
+  string ip = 8;
+
+  //name of the load balancer
+  string name = 9;
+
+  //whether http requests will be redirected to https
+  bool redirect_http_to_https = 10 [json_name = "redirect_http_to_https"];
+
+  //the region that the load blanacer is deployed in
+  string region = 11;
+
+  //current state of the Load Balancer
+  string status = 12;
+
+  //sticky sessions settings for the load balancer
+  repeated StickySessions sticky_sessions = 13 [json_name = "sticky_sessions"];
+
+  //the uniform resource name for the load balancer
+  string urn = 14;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 15;
+
+  int32 count = 16;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 17;
+
+  string provider = 18;
+
+  terraform.meta.Lifecycle lifecycle = 19;
+
+  message ForwardingRule {
+    string certificate_id = 1 [json_name = "certificate_id"];
+
+    int64 entry_port = 2 [json_name = "entry_port"];
+
+    string entry_protocol = 3 [json_name = "entry_protocol"];
+
+    int64 target_port = 4 [json_name = "target_port"];
+
+    string target_protocol = 5 [json_name = "target_protocol"];
+
+    bool tls_passthrough = 6 [json_name = "tls_passthrough"];
+  }
+
+  message Healthcheck {
+    int64 check_interval_seconds = 1 [json_name = "check_interval_seconds"];
+
+    int64 healthy_threshold = 2 [json_name = "healthy_threshold"];
+
+    string path = 3;
+
+    int64 port = 4;
+
+    string protocol = 5;
+
+    int64 response_timeout_seconds = 6 [json_name = "response_timeout_seconds"];
+
+    int64 unhealthy_threshold = 7 [json_name = "unhealthy_threshold"];
+  }
+
+  message StickySessions {
+    string cookie_name = 1 [json_name = "cookie_name"];
+
+    int64 cookie_ttl_seconds = 2 [json_name = "cookie_ttl_seconds"];
+
+    string type = 3;
+  }
 }
 
 //DigitaloceanRecord version is 0
 message DigitaloceanRecord {
-  //weight of the name record
-  int64 weight = 1;
-
   //name record data
-  string data = 2;
+  string data = 1;
 
   //domain of the name record
-  string domain = 3;
-
-  //name of the record
-  string name = 4;
-
-  //priority of the name record
-  int64 priority = 5;
-
-  //tag of the name record
-  string tag = 6;
-
-  //ttl of the name record
-  int64 ttl = 7;
+  string domain = 2;
 
   //flags of the name record
-  int64 flags = 8;
+  int64 flags = 3;
 
-  string id = 9;
+  string id = 4;
+
+  //name of the record
+  string name = 5;
 
   //port of the name record
-  int64 port = 10;
+  int64 port = 6;
+
+  //priority of the name record
+  int64 priority = 7;
+
+  //tag of the name record
+  string tag = 8;
+
+  //ttl of the name record
+  int64 ttl = 9;
 
   //type of the name record
-  string type = 11;
+  string type = 10;
+
+  //weight of the name record
+  int64 weight = 11;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 12;
+
+  int32 count = 13;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 14;
+
+  string provider = 15;
+
+  terraform.meta.Lifecycle lifecycle = 16;
+}
+
+//DigitaloceanSizes version is 0
+message DigitaloceanSizes {
+  string id = 1;
+
+  //List of filtered digital ocean sizes.
+  repeated Sizes sizes = 2;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 3;
+
+  int32 count = 4;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 5;
+
+  string provider = 6;
+
+  terraform.meta.Lifecycle lifecycle = 7;
+
+  message Sizes {
+    bool available = 1;
+
+    int64 disk = 2;
+
+    int64 memory = 3;
+
+    int64 price_hourly = 4 [json_name = "price_hourly"];
+
+    int64 price_monthly = 5 [json_name = "price_monthly"];
+
+    repeated string regions = 6;
+
+    string slug = 7;
+
+    int64 transfer = 8;
+
+    int64 vcpus = 9;
+  }
+}
+
+//DigitaloceanSshKey version is 0
+message DigitaloceanSshKey {
+  //fingerprint of the ssh key
+  string fingerprint = 1;
+
+  string id = 2;
+
+  //name of the ssh key
+  string name = 3;
+
+  //public key part of the ssh key
+  string public_key = 4 [json_name = "public_key"];
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 5;
+
+  int32 count = 6;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 7;
+
+  string provider = 8;
+
+  terraform.meta.Lifecycle lifecycle = 9;
+}
+
+//DigitaloceanTag version is 0
+message DigitaloceanTag {
+  string id = 1;
+
+  //name of the tag
+  string name = 2;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 3;
+
+  int32 count = 4;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 5;
+
+  string provider = 6;
+
+  terraform.meta.Lifecycle lifecycle = 7;
+}
+
+//DigitaloceanVolume version is 0
+message DigitaloceanVolume {
+  //volume description
+  string description = 1;
+
+  //list of droplet ids the volume is attached to
+  repeated int64 droplet_ids = 2 [json_name = "droplet_ids"];
+
+  //the label currently applied to the filesystem
+  string filesystem_label = 3 [json_name = "filesystem_label"];
+
+  //the type of filesystem currently in-use on the volume
+  string filesystem_type = 4 [json_name = "filesystem_type"];
+
+  string id = 5;
+
+  //name of the volume
+  string name = 6;
+
+  //the region that the volume is provisioned in
+  string region = 7;
+
+  //the size of the volume in gigabytes
+  int64 size = 8;
+
+  //the iniform resource name for the volume
+  string urn = 9;
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 10;
+
+  int32 count = 11;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 12;
+
+  string provider = 13;
+
+  terraform.meta.Lifecycle lifecycle = 14;
+}
+
+//DigitaloceanVolumeSnapshot version is 0
+message DigitaloceanVolumeSnapshot {
+  string created_at = 1 [json_name = "created_at"];
+
+  string id = 2;
+
+  int64 min_disk_size = 3 [json_name = "min_disk_size"];
+
+  bool most_recent = 4 [json_name = "most_recent"];
+
+  string name = 5;
+
+  string name_regex = 6 [json_name = "name_regex"];
+
+  string region = 7;
+
+  repeated string regions = 8;
+
+  int64 size = 9;
+
+  string volume_id = 10 [json_name = "volume_id"];
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 11;
+
+  int32 count = 12;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 13;
+
+  string provider = 14;
+
+  terraform.meta.Lifecycle lifecycle = 15;
 }

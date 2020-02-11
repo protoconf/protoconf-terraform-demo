@@ -5,6 +5,7 @@ This is the entrypoint of the terraform file.
 load("/terraform/terraform.proto", "Terraform")
 load("/terraform/digitalocean-resources.proto", "DigitaloceanDroplet")
 load("/terraform/random-resources.proto", "RandomPet")
+load("/terraform/meta.proto", "Lifecycle")
 load(
     "install_scripts.pinc",
     "INSTALL_BASE",
@@ -38,6 +39,7 @@ def create_droplet(hostname, role="server", dc="ams3", user_data=""):
         tags=[role],
         private_networking=True,
         user_data=user_data,
+        lifecycle=Lifecycle(ignore_changes=["user_data"]),
     )
 
 

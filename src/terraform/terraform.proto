@@ -6,70 +6,80 @@ import "terraform/digitalocean-resources.proto";
 
 import "terraform/random-resources.proto";
 
+import "terraform/tls-resources.proto";
+
 message Terraform {
   Resources resource = 1;
 
   message Resources {
-    map<string, digitalocean.resources.DigitaloceanVolumeAttachment> digitalocean_volume_attachment = 1 [json_name = "digitalocean_volume_attachment"];
+    map<string, digitalocean.resources.DigitaloceanCdn> digitalocean_cdn = 1 [json_name = "digitalocean_cdn"];
 
-    map<string, digitalocean.resources.DigitaloceanFirewall> digitalocean_firewall = 2 [json_name = "digitalocean_firewall"];
+    map<string, digitalocean.resources.DigitaloceanCertificate> digitalocean_certificate = 2 [json_name = "digitalocean_certificate"];
 
-    map<string, digitalocean.resources.DigitaloceanKubernetesNodePool> digitalocean_kubernetes_node_pool = 3 [json_name = "digitalocean_kubernetes_node_pool"];
+    map<string, digitalocean.resources.DigitaloceanDatabaseCluster> digitalocean_database_cluster = 3 [json_name = "digitalocean_database_cluster"];
 
-    map<string, digitalocean.resources.DigitaloceanCdn> digitalocean_cdn = 4 [json_name = "digitalocean_cdn"];
+    map<string, digitalocean.resources.DigitaloceanDatabaseConnectionPool> digitalocean_database_connection_pool = 4 [json_name = "digitalocean_database_connection_pool"];
 
-    map<string, digitalocean.resources.DigitaloceanCertificate> digitalocean_certificate = 5 [json_name = "digitalocean_certificate"];
+    map<string, digitalocean.resources.DigitaloceanDatabaseDb> digitalocean_database_db = 5 [json_name = "digitalocean_database_db"];
 
-    map<string, digitalocean.resources.DigitaloceanFloatingIp> digitalocean_floating_ip = 6 [json_name = "digitalocean_floating_ip"];
+    map<string, digitalocean.resources.DigitaloceanDatabaseReplica> digitalocean_database_replica = 6 [json_name = "digitalocean_database_replica"];
 
-    map<string, digitalocean.resources.DigitaloceanSpacesBucket> digitalocean_spaces_bucket = 7 [json_name = "digitalocean_spaces_bucket"];
+    map<string, digitalocean.resources.DigitaloceanDatabaseUser> digitalocean_database_user = 7 [json_name = "digitalocean_database_user"];
 
-    map<string, digitalocean.resources.DigitaloceanVolume> digitalocean_volume = 8 [json_name = "digitalocean_volume"];
+    map<string, digitalocean.resources.DigitaloceanDomain> digitalocean_domain = 8 [json_name = "digitalocean_domain"];
 
-    map<string, digitalocean.resources.DigitaloceanDatabaseCluster> digitalocean_database_cluster = 9 [json_name = "digitalocean_database_cluster"];
+    map<string, digitalocean.resources.DigitaloceanDroplet> digitalocean_droplet = 9 [json_name = "digitalocean_droplet"];
 
-    map<string, digitalocean.resources.DigitaloceanDroplet> digitalocean_droplet = 10 [json_name = "digitalocean_droplet"];
+    map<string, digitalocean.resources.DigitaloceanDropletSnapshot> digitalocean_droplet_snapshot = 10 [json_name = "digitalocean_droplet_snapshot"];
 
-    map<string, digitalocean.resources.DigitaloceanProject> digitalocean_project = 11 [json_name = "digitalocean_project"];
+    map<string, digitalocean.resources.DigitaloceanFirewall> digitalocean_firewall = 11 [json_name = "digitalocean_firewall"];
 
-    map<string, digitalocean.resources.DigitaloceanDatabaseConnectionPool> digitalocean_database_connection_pool = 12 [json_name = "digitalocean_database_connection_pool"];
+    map<string, digitalocean.resources.DigitaloceanFloatingIp> digitalocean_floating_ip = 12 [json_name = "digitalocean_floating_ip"];
 
-    map<string, digitalocean.resources.DigitaloceanDatabaseReplica> digitalocean_database_replica = 13 [json_name = "digitalocean_database_replica"];
+    map<string, digitalocean.resources.DigitaloceanFloatingIpAssignment> digitalocean_floating_ip_assignment = 13 [json_name = "digitalocean_floating_ip_assignment"];
 
-    map<string, digitalocean.resources.DigitaloceanFloatingIpAssignment> digitalocean_floating_ip_assignment = 14 [json_name = "digitalocean_floating_ip_assignment"];
+    map<string, digitalocean.resources.DigitaloceanKubernetesCluster> digitalocean_kubernetes_cluster = 14 [json_name = "digitalocean_kubernetes_cluster"];
 
-    map<string, digitalocean.resources.DigitaloceanVolumeSnapshot> digitalocean_volume_snapshot = 15 [json_name = "digitalocean_volume_snapshot"];
+    map<string, digitalocean.resources.DigitaloceanKubernetesNodePool> digitalocean_kubernetes_node_pool = 15 [json_name = "digitalocean_kubernetes_node_pool"];
 
-    map<string, digitalocean.resources.DigitaloceanTag> digitalocean_tag = 16 [json_name = "digitalocean_tag"];
+    map<string, digitalocean.resources.DigitaloceanLoadbalancer> digitalocean_loadbalancer = 16 [json_name = "digitalocean_loadbalancer"];
 
-    map<string, digitalocean.resources.DigitaloceanKubernetesCluster> digitalocean_kubernetes_cluster = 17 [json_name = "digitalocean_kubernetes_cluster"];
+    map<string, digitalocean.resources.DigitaloceanProject> digitalocean_project = 17 [json_name = "digitalocean_project"];
 
-    map<string, digitalocean.resources.DigitaloceanSshKey> digitalocean_ssh_key = 18 [json_name = "digitalocean_ssh_key"];
+    map<string, digitalocean.resources.DigitaloceanRecord> digitalocean_record = 18 [json_name = "digitalocean_record"];
 
-    map<string, digitalocean.resources.DigitaloceanDatabaseUser> digitalocean_database_user = 19 [json_name = "digitalocean_database_user"];
+    map<string, digitalocean.resources.DigitaloceanSpacesBucket> digitalocean_spaces_bucket = 19 [json_name = "digitalocean_spaces_bucket"];
 
-    map<string, digitalocean.resources.DigitaloceanRecord> digitalocean_record = 20 [json_name = "digitalocean_record"];
+    map<string, digitalocean.resources.DigitaloceanSshKey> digitalocean_ssh_key = 20 [json_name = "digitalocean_ssh_key"];
 
-    map<string, digitalocean.resources.DigitaloceanDropletSnapshot> digitalocean_droplet_snapshot = 21 [json_name = "digitalocean_droplet_snapshot"];
+    map<string, digitalocean.resources.DigitaloceanTag> digitalocean_tag = 21 [json_name = "digitalocean_tag"];
 
-    map<string, digitalocean.resources.DigitaloceanDomain> digitalocean_domain = 22 [json_name = "digitalocean_domain"];
+    map<string, digitalocean.resources.DigitaloceanVolume> digitalocean_volume = 22 [json_name = "digitalocean_volume"];
 
-    map<string, digitalocean.resources.DigitaloceanLoadbalancer> digitalocean_loadbalancer = 23 [json_name = "digitalocean_loadbalancer"];
+    map<string, digitalocean.resources.DigitaloceanVolumeAttachment> digitalocean_volume_attachment = 23 [json_name = "digitalocean_volume_attachment"];
 
-    map<string, digitalocean.resources.DigitaloceanDatabaseDb> digitalocean_database_db = 24 [json_name = "digitalocean_database_db"];
+    map<string, digitalocean.resources.DigitaloceanVolumeSnapshot> digitalocean_volume_snapshot = 24 [json_name = "digitalocean_volume_snapshot"];
 
-    map<string, random.resources.RandomShuffle> random_shuffle = 25 [json_name = "random_shuffle"];
+    map<string, random.resources.RandomId> random_id = 25 [json_name = "random_id"];
 
-    map<string, random.resources.RandomPet> random_pet = 26 [json_name = "random_pet"];
+    map<string, random.resources.RandomInteger> random_integer = 26 [json_name = "random_integer"];
 
-    map<string, random.resources.RandomString> random_string = 27 [json_name = "random_string"];
+    map<string, random.resources.RandomPassword> random_password = 27 [json_name = "random_password"];
 
-    map<string, random.resources.RandomPassword> random_password = 28 [json_name = "random_password"];
+    map<string, random.resources.RandomPet> random_pet = 28 [json_name = "random_pet"];
 
-    map<string, random.resources.RandomInteger> random_integer = 29 [json_name = "random_integer"];
+    map<string, random.resources.RandomShuffle> random_shuffle = 29 [json_name = "random_shuffle"];
 
-    map<string, random.resources.RandomUuid> random_uuid = 30 [json_name = "random_uuid"];
+    map<string, random.resources.RandomString> random_string = 30 [json_name = "random_string"];
 
-    map<string, random.resources.RandomId> random_id = 31 [json_name = "random_id"];
+    map<string, random.resources.RandomUuid> random_uuid = 31 [json_name = "random_uuid"];
+
+    map<string, tls.resources.TlsCertRequest> tls_cert_request = 32 [json_name = "tls_cert_request"];
+
+    map<string, tls.resources.TlsLocallySignedCert> tls_locally_signed_cert = 33 [json_name = "tls_locally_signed_cert"];
+
+    map<string, tls.resources.TlsPrivateKey> tls_private_key = 34 [json_name = "tls_private_key"];
+
+    map<string, tls.resources.TlsSelfSignedCert> tls_self_signed_cert = 35 [json_name = "tls_self_signed_cert"];
   }
 }

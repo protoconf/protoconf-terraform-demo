@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package terraform.tls.data;
+
+import "terraform/meta.proto";
+
+//TlsPublicKey version is 0
+message TlsPublicKey {
+  //Name of the algorithm to use to generate the private key
+  string algorithm = 1;
+
+  string id = 2;
+
+  //PEM formatted string to use as the private key
+  string private_key_pem = 3 [json_name = "private_key_pem"];
+
+  string public_key_fingerprint_md5 = 4 [json_name = "public_key_fingerprint_md5"];
+
+  string public_key_openssh = 5 [json_name = "public_key_openssh"];
+
+  string public_key_pem = 6 [json_name = "public_key_pem"];
+
+  terraform.meta.MetaFields.DependsOnEntry depends_on = 7;
+
+  int32 count = 8;
+
+  terraform.meta.MetaFields.ForEachEntry for_each = 9;
+
+  string provider = 10;
+
+  terraform.meta.Lifecycle lifecycle = 11;
+}
